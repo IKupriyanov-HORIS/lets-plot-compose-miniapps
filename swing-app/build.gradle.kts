@@ -33,8 +33,6 @@ dependencies {
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:vis-swing-common:$lets_plot_version")
     implementation("org.jetbrains.skiko:skiko-awt-runtime-$hostOs-$hostArch:$skikoVersion")
 }

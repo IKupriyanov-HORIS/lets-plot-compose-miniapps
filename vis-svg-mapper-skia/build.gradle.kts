@@ -16,7 +16,6 @@ kotlin {
             dependencies {
                 val lets_plot_version: String by project
                 val skikoVersion = extra["skiko.version"] as String
-                val coroutinesVersion = extra["kotlinx.coroutines.version"] as String
 
                 compileOnly("org.jetbrains.lets-plot:base:$lets_plot_version")
                 compileOnly("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
@@ -25,7 +24,6 @@ kotlin {
                 compileOnly("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
 
                 compileOnly("org.jetbrains.skiko:skiko:$skikoVersion")
-                compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
             }
         }
     }
