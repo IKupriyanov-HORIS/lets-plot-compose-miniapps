@@ -5,9 +5,9 @@
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
+    id("maven-publish")
     //id("org.jetbrains.compose")
 }
-
 
 kotlin {
     jvm()

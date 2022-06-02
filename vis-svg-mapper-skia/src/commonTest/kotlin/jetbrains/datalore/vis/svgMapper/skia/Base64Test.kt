@@ -6,46 +6,78 @@ class Base64Test {
 
     @Test
     fun emptyBuffer() {
-        assertEquals("", Base64.encode("".toByteArray()))
+        val str = ""
+        val data = "".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun f() {
-        assertEquals("Zg==", Base64.encode("f".toByteArray()))
+        val str = "Zg=="
+        val data = "f".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun fo() {
-        assertEquals("Zm8=", Base64.encode("fo".toByteArray()))
+        val str = "Zm8="
+        val data = "fo".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun foo() {
-        assertEquals("Zm9v", Base64.encode("foo".toByteArray()))
+        val str = "Zm9v"
+        val data = "foo".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun foob() {
-        assertEquals("Zm9vYg==", Base64.encode("foob".toByteArray()))
+        val str = "Zm9vYg=="
+        val data = "foob".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun fooba() {
-        assertEquals("Zm9vYmE=", Base64.encode("fooba".toByteArray()))
+        val str = "Zm9vYmE="
+        val data = "fooba".toByteArray()
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
     fun foobar() {
-        assertEquals("Zm9vYmFy", Base64.encode("foobar".toByteArray()))
+        val data = "foobar".toByteArray()
+        val str = "Zm9vYmFy"
+        assertEquals(str, Base64.encode(data))
+        assertEquals(data, Base64.decode(str))
     }
 
     @Test
-    fun bunch() {
+    fun bunchEncode() {
         assertEquals("AA==", Base64.encode(byteArray(0)))
         assertEquals("AAA=", Base64.encode(byteArray(0, 0)))
         assertEquals("AAAA", Base64.encode(byteArray(0, 0, 0)))
         assertEquals("/+8=", Base64.encode(byteArray(0xff, 0xef)))
     }
 
+    @Test
+    fun bunchDecode() {
+        assertEquals(byteArray(0), Base64.decode("AA=="))
+        assertEquals(byteArray(0, 0), Base64.decode("AAA="))
+        assertEquals(byteArray(0, 0, 0), Base64.decode("AAAA"))
+        assertEquals(byteArray(0xff, 0xef), Base64.decode("/+8="))
+    }
+
     private fun byteArray(vararg a : Int): ByteArray = a.toList().map { it.toByte() }.toByteArray()
+    private fun assertEquals(expected: ByteArray, actual: ByteArray) {
+        assertEquals(expected.toList(), actual.toList())
+    }
 }

@@ -90,7 +90,7 @@ abstract class Element: Drawable() {
     protected fun <T> visualProp(initialValue: T): ReadWriteProperty<Any?, T> =
         observable(initialValue) { property, oldValue, newValue ->
             if (oldValue != newValue) {
-                this.propertyDeps.getOrDefault(property, emptyList()).forEach(DependencyProperty<*>::invalidate)
+                this.propertyDeps.getOrElse(property, ::emptyList).forEach(DependencyProperty<*>::invalidate)
                 this.repaint()
             }
     }

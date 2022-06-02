@@ -10,7 +10,7 @@ import jetbrains.datalore.vis.svg.*
 import jetbrains.datalore.vis.svg.slim.SvgSlimElements
 
 object DemoModelA {
-    fun createModel(): SvgGElement {
+    fun createModel(): SvgSvgElement {
         val svgRoot = SvgGElement()
 
         svgRoot.children().add(createSlimGroup())
@@ -65,7 +65,9 @@ object DemoModelA {
         path.fillColor().set(Color.LIGHT_BLUE)
         svgRoot.children().add(path)
 
-        return svgRoot
+        return SvgSvgElement(500.0, 500.0).apply {
+            children().add(svgRoot)
+        }
     }
 
     private fun createStyleElement(textStyles: Map<String, TextStyle>): SvgStyleElement {

@@ -2,14 +2,10 @@ import java.util.*
 
 buildscript {
 
-    dependencies {
-        classpath("org.yaml:snakeyaml:1.25")
-    }
 }
 
 plugins {
     kotlin("jvm") apply false
-    kotlin("multiplatform") apply false
     kotlin("android") apply false
     id("com.android.application") apply false
 }
@@ -26,8 +22,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        val buildSettings: Map<String, Any?>? by project
-
         localProps.get("maven.repo.local")?.let {
             mavenLocal {
                 println("${project.name}: local maven repo: $it")
