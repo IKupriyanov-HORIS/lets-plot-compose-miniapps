@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities
 
 class SkiaMapperPanel(
     private val svg: SvgSvgElement,
+    private val density: Float = 1.0f
 ) : JPanel(), Disposable {
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
     private val skiaLayer = SkiaLayer()
@@ -28,6 +29,8 @@ class SkiaMapperPanel(
         rootMapper.attachRoot(MappingContext())
         val plotView = object : SkikoView {
             override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
+                canvas.clear(0)
+                canvas.scale(density, density)
                 canvas.drawDrawable(rootMapper.target)
             }
         }

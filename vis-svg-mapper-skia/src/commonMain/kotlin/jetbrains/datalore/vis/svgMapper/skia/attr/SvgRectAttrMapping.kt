@@ -6,7 +6,7 @@
 package jetbrains.datalore.vis.svgMapper.skia.attr
 
 import jetbrains.datalore.vis.svg.SvgRectElement
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Rectangle
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Rectangle
 
 internal object SvgRectAttrMapping : SvgShapeMapping<Rectangle>() {
     override fun setAttribute(target: Rectangle, name: String, value: Any?) {

@@ -1,30 +1,36 @@
+package jetbrains.datalore.vis.svgMapper.demo
+
 import jetbrains.datalore.base.geometry.DoubleVector
 import jetbrains.datalore.base.values.Color
+import jetbrains.datalore.base.values.FontFace
+import jetbrains.datalore.base.values.FontFamily
+import jetbrains.datalore.vis.StyleSheet
+import jetbrains.datalore.vis.TextStyle
 import jetbrains.datalore.vis.svg.*
 import jetbrains.datalore.vis.svg.slim.SvgSlimElements
 
 object DemoModelA {
-
     fun createModel(): SvgGElement {
         val svgRoot = SvgGElement()
 
         svgRoot.children().add(createSlimGroup())
 
-        var text = SvgTextElement(0.0, 0.0, "Slim elements")
-        text.getAttribute(SvgConstants.SVG_STYLE_ATTRIBUTE).set("font-size:15;font-style:italic;")
+        val textStyles: Map<String, TextStyle> = mapOf(
+            "TEXT1" to TextStyle(FontFamily.SERIF, face = FontFace.ITALIC, size = 15.0, color = Color.BLUE),
+            "TEXT2" to TextStyle(FontFamily.SERIF, face = FontFace.BOLD, size = 20.0, color = Color.RED)
+        )
+        svgRoot.children().add(createStyleElement(textStyles))
 
+        var text = SvgTextElement(30.0, 85.0, "Slim elements")
         SvgUtils.transformRotate(text, -45.0, 20.0, 100.0)
-        text.fillColor().set(Color.RED)
-        svgRoot.children().add(text)
+        svgRoot.children().add(createElementGroup(text, className = "TEXT1"))
 
         svgRoot.children().add(createHLineGroup())
 
         text = SvgTextElement(20.0, 225.0, "Svg elements")
-        text.getAttribute(SvgConstants.SVG_STYLE_ATTRIBUTE).set("font-size:20; font-weight:500;")
-        text.fillColor().set(Color.RED)
         text.stroke().set(SvgColors.CORAL)
         text.strokeWidth().set(1.0)
-        svgRoot.children().add(text)
+        svgRoot.children().add(createElementGroup(text, className = "TEXT2"))
 
         val circle = SvgCircleElement(300.0, 260.0, 50.0)
         circle.fillColor().set(Color.LIGHT_PINK)
@@ -60,6 +66,21 @@ object DemoModelA {
         svgRoot.children().add(path)
 
         return svgRoot
+    }
+
+    private fun createStyleElement(textStyles: Map<String, TextStyle>): SvgStyleElement {
+        return SvgStyleElement(object : SvgCssResource {
+            override fun css(): String {
+                return StyleSheet(textStyles, defaultFamily = FontFamily.SERIF.toString(), defaultSize = 15.0).toCSS()
+            }
+        })
+    }
+
+    private fun createElementGroup(element: SvgNode, className: String): SvgGElement {
+        val g = SvgGElement()
+        g.addClass(className)
+        g.children().add(element)
+        return g
     }
 
     private fun createSlimGroup(): SvgNode {
@@ -151,7 +172,7 @@ object DemoModelA {
     }
 
     private fun createSawPointsFrom(x: Double, y: Double): List<DoubleVector> {
-        val points = ArrayList<DoubleVector>(21)
+        val points = mutableListOf<DoubleVector>()
         points.add(DoubleVector(x, y))
         var i = 0.0
         while (i < 400) {

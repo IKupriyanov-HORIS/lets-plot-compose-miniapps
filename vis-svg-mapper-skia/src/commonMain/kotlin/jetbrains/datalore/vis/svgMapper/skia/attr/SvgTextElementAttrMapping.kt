@@ -9,7 +9,7 @@ import jetbrains.datalore.vis.svg.SvgConstants.SVG_TEXT_DY_CENTER
 import jetbrains.datalore.vis.svg.SvgConstants.SVG_TEXT_DY_TOP
 import jetbrains.datalore.vis.svg.SvgTextContent
 import jetbrains.datalore.vis.svg.SvgTextElement
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Text
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Text
 
 internal object SvgTextElementAttrMapping : SvgShapeMapping<Text>() {
     override fun setAttribute(target: Text, name: String, value: Any?) {

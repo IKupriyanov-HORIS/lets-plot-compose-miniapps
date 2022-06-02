@@ -10,9 +10,11 @@ import jetbrains.datalore.base.observable.property.ReadableProperty
 import jetbrains.datalore.base.observable.property.SimpleCollectionProperty
 import jetbrains.datalore.base.observable.property.WritableProperty
 import jetbrains.datalore.mapper.core.Synchronizers
+import jetbrains.datalore.vis.StyleSheet
 import jetbrains.datalore.vis.svg.*
 import jetbrains.datalore.vis.svgMapper.skia.attr.SvgTextElementAttrMapping
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Text
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Text
+import org.jetbrains.skia.FontStyle
 
 internal class SvgTextElementMapper(
     source: SvgTextElement,
@@ -39,6 +41,10 @@ internal class SvgTextElementMapper(
         myTextAttrSupport.setAttribute(name, value)
     }
 
+    override fun applyStyle() {
+        setFontProperties(target, peer.styleSheet)
+    }
+
     override fun registerSynchronizers(conf: SynchronizersConfiguration) {
         super.registerSynchronizers(conf)
 
@@ -55,6 +61,28 @@ internal class SvgTextElementMapper(
                 targetTextProperty(target)
             )
         )
+    }
+
+    private fun setFontProperties(target: Text, styleSheet: StyleSheet?) {
+        if (styleSheet == null) {
+            return
+        }
+        val className = target.parent?.styleClass?.firstOrNull()
+        if (!className.isNullOrEmpty()) {
+            val style = styleSheet.getTextStyle(className)
+            target.fill = style.color.asSkiaColor
+            target.fontFamily = style.family.toString()
+            target.fontSize = style.size.toFloat()
+            target.fontStyle = when  {
+                style.face.bold && !style.face.italic -> FontStyle.BOLD
+                style.face.bold && style.face.italic -> FontStyle.BOLD_ITALIC
+                !style.face.bold && style.face.italic -> FontStyle.ITALIC
+                !style.face.bold && !style.face.italic -> FontStyle.NORMAL
+                else -> error("Unknown fontStyle: `${ style.face.toString() }`")
+            }
+
+            myTextAttrSupport.setAttribute(SvgConstants.SVG_STYLE_ATTRIBUTE, "fill:${style.color.toHexColor()};")
+        }
     }
 
     companion object {

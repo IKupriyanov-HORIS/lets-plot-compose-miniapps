@@ -6,7 +6,7 @@
 package jetbrains.datalore.vis.svgMapper.skia.attr
 
 import jetbrains.datalore.vis.svg.SvgSvgElement
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Pane
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Pane
 
 internal object SvgSvgAttrMapping : SvgAttrMapping<Pane>() {
 

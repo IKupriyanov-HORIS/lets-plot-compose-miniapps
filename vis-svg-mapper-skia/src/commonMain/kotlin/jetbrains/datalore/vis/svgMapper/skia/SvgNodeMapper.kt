@@ -9,7 +9,7 @@ package jetbrains.datalore.vis.svgMapper.skia
 import jetbrains.datalore.mapper.core.Mapper
 import jetbrains.datalore.mapper.core.MappingContext
 import jetbrains.datalore.vis.svg.SvgNode
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Element
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Element
 
 open class SvgNodeMapper<SourceT : SvgNode, TargetT : Element>(
         source: SourceT,

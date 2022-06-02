@@ -5,7 +5,7 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.attr
 
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Group
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Group
 
 
 internal object SvgGAttrMapping : SvgAttrMapping<Group>() {

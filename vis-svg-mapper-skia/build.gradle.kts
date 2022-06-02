@@ -26,5 +26,11 @@ kotlin {
                 compileOnly("org.jetbrains.skiko:skiko:$skikoVersion")
             }
         }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }

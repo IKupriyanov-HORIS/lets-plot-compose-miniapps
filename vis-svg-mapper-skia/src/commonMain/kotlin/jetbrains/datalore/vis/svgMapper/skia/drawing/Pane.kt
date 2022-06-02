@@ -3,7 +3,7 @@
  * Use of this source code is governed by the MIT license that can be found in the LICENSE file.
  */
 
-package jetbrains.datalore.vis.svgMapper.skia.drawable
+package jetbrains.datalore.vis.svgMapper.skia.drawing
 
 import org.jetbrains.skia.Rect
 

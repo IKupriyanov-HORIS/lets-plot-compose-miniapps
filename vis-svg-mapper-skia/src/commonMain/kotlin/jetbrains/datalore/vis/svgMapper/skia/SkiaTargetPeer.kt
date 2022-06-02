@@ -13,9 +13,9 @@ import jetbrains.datalore.vis.svg.event.SvgEventSpec
 import jetbrains.datalore.vis.svg.slim.SvgSlimElements
 import jetbrains.datalore.vis.svg.slim.SvgSlimNode
 import jetbrains.datalore.vis.svgMapper.TargetPeer
-import jetbrains.datalore.vis.svgMapper.skia.Utils.getChildren
-import jetbrains.datalore.vis.svgMapper.skia.Utils.newElement
-import jetbrains.datalore.vis.svgMapper.skia.drawable.*
+import jetbrains.datalore.vis.svgMapper.skia.SvgUtils.getChildren
+import jetbrains.datalore.vis.svgMapper.skia.SvgUtils.newElement
+import jetbrains.datalore.vis.svgMapper.skia.drawing.*
 
 internal class SkiaTargetPeer : TargetPeer<Element> {
     override fun appendChild(target: Element, child: Element) {
@@ -48,7 +48,7 @@ internal class SkiaTargetPeer : TargetPeer<Element> {
     }
 
     override fun setAttribute(target: Element, name: String, value: String) {
-        Utils.setAttribute(target, name, value)
+        SvgUtils.setAttribute(target, name, value)
     }
 
     override fun hookEventHandlers(source: SvgElement, target: Element, eventSpecs: Set<SvgEventSpec>): Registration {

@@ -3,7 +3,7 @@
  * Use of this source code is governed by the MIT license that can be found in the LICENSE file.
  */
 
-package jetbrains.datalore.vis.svgMapper.skia.drawable
+package jetbrains.datalore.vis.svgMapper.skia.drawing
 
 import jetbrains.datalore.base.observable.collections.CollectionItemEvent
 import jetbrains.datalore.base.observable.collections.list.ObservableArrayList
@@ -17,13 +17,13 @@ abstract class Parent: Element() {
     init {
         children.addHandler(object : EventHandler<CollectionItemEvent<out Element>> {
             override fun onEvent(event: CollectionItemEvent<out Element>) {
-                invalidate()
+                event.newItem?.parent = this@Parent
+                repaint()
             }
         })
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        transforms.forEach { it.apply(canvas!!) }
+    override fun doDraw(canvas: Canvas) {
         children.forEach {
             it.draw(canvas)
         }

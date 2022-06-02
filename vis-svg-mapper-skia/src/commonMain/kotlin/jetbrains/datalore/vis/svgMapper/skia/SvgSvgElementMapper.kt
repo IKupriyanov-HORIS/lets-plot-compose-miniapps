@@ -9,7 +9,7 @@ package jetbrains.datalore.vis.svgMapper.skia
 import jetbrains.datalore.mapper.core.MappingContext
 import jetbrains.datalore.mapper.core.Synchronizers
 import jetbrains.datalore.vis.svg.SvgSvgElement
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Pane
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Pane
 
 class SvgSvgElementMapper(
     source: SvgSvgElement,
@@ -19,7 +19,7 @@ class SvgSvgElementMapper(
     override fun registerSynchronizers(conf: SynchronizersConfiguration) {
         super.registerSynchronizers(conf)
 
-        val targetList = Utils.elementChildren(target)
+        val targetList = SvgUtils.elementChildren(target)
         conf.add(
             Synchronizers.forObservableRole(
                 this,

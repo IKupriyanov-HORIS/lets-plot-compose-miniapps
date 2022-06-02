@@ -9,15 +9,21 @@ import jetbrains.datalore.base.geometry.DoubleRectangle
 import jetbrains.datalore.base.geometry.DoubleVector
 import jetbrains.datalore.base.unsupported.UNSUPPORTED
 import jetbrains.datalore.mapper.core.Mapper
+import jetbrains.datalore.vis.StyleSheet
 import jetbrains.datalore.vis.svg.SvgLocatable
 import jetbrains.datalore.vis.svg.SvgNode
 import jetbrains.datalore.vis.svg.SvgPlatformPeer
 import jetbrains.datalore.vis.svg.SvgTextContent
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Element
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Element
 
 class SvgSkiaPeer : SvgPlatformPeer {
     private val myMappingMap = HashMap<SvgNode, Mapper<out SvgNode, out Element>>()
+    var styleSheet: StyleSheet? = null
+        private set
 
+    fun applyStyleSheet(styleSheet: StyleSheet) {
+        this.styleSheet = styleSheet
+    }
 //    private fun ensureElementConsistency(source: SvgNode, target: Node) {
 //        if (source is SvgElement && target !is SVGOMElement) {
 //            throw IllegalStateException("Target of SvgElement must be SVGOMElement")

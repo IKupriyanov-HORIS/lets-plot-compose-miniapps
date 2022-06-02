@@ -7,29 +7,26 @@ package jetbrains.datalore.vis.svgMapper.skia
 
 
 import jetbrains.datalore.vis.svg.*
-import jetbrains.datalore.vis.svgMapper.skia.attr.SvgAttrMapping
-import jetbrains.datalore.vis.svgMapper.skia.attr.SvgGAttrMapping
-import jetbrains.datalore.vis.svgMapper.skia.attr.SvgRectAttrMapping
-import jetbrains.datalore.vis.svgMapper.skia.attr.SvgSvgAttrMapping
-import jetbrains.datalore.vis.svgMapper.skia.drawable.*
+import jetbrains.datalore.vis.svgMapper.skia.attr.*
+import jetbrains.datalore.vis.svgMapper.skia.drawing.*
 import kotlin.reflect.KClass
 
 
-@Suppress("UNCHECKED_CAST")
-private val ATTR_MAPPINGS: Map<KClass<out Element>, SvgAttrMapping<Element>> = mapOf(
-    Pane::class to (SvgSvgAttrMapping as SvgAttrMapping<Element>),
-    //StackPane::class to (SvgSvgAttrMapping as SvgAttrMapping<Element>),
-    Group::class to (SvgGAttrMapping as SvgAttrMapping<Element>),
-    Rectangle::class to (SvgRectAttrMapping as SvgAttrMapping<Element>),
-    //Line::class to (SvgLineAttrMapping as SvgAttrMapping<Element>),
-    //Ellipse::class to (SvgEllipseAttrMapping as SvgAttrMapping<Element>),
-    //Circle::class to (SvgCircleAttrMapping as SvgAttrMapping<Element>),
-    //Text::class to (SvgTextElementAttrMapping as SvgAttrMapping<Element>),
-    //SVGPath::class to (SvgPathAttrMapping as SvgAttrMapping<Element>),
-    //ImageView::class to (SvgImageAttrMapping as SvgAttrMapping<Element>)
-)
+internal object SvgUtils {
+    @Suppress("UNCHECKED_CAST")
+    private val ATTR_MAPPINGS: Map<KClass<out Element>, SvgAttrMapping<Element>> = mapOf(
+        Pane::class to (SvgSvgAttrMapping as SvgAttrMapping<Element>),
+        //StackPane::class to (SvgSvgAttrMapping as SvgAttrMapping<Element>),
+        Group::class to (SvgGAttrMapping as SvgAttrMapping<Element>),
+        Rectangle::class to (SvgRectAttrMapping as SvgAttrMapping<Element>),
+        Line::class to (SvgLineAttrMapping as SvgAttrMapping<Element>),
+        Ellipse::class to (SvgEllipseAttrMapping as SvgAttrMapping<Element>),
+        Circle::class to (SvgCircleAttrMapping as SvgAttrMapping<Element>),
+        //Text::class to (SvgTextElementAttrMapping as SvgAttrMapping<Element>),
+        Path::class to (SvgPathAttrMapping as SvgAttrMapping<Element>),
+        Image::class to (SvgImageAttrMapping as SvgAttrMapping<Element>)
+    )
 
-internal object Utils {
     fun elementChildren(e: Element): MutableList<Element> {
         return object : AbstractMutableList<Element>() {
             override val size: Int
@@ -69,46 +66,37 @@ internal object Utils {
 
     fun newElement(source: SvgNode): Element {
         return when (source) {
-            is SvgEllipseElement -> TODO() // Ellipse()
+            is SvgEllipseElement -> Ellipse()
             is SvgCircleElement -> Circle()
             is SvgRectElement -> Rectangle()
             is SvgTextElement -> Text()
             is SvgPathElement -> Path()
             is SvgLineElement -> Line()
-            is SvgSvgElement -> Pane() // Rectangle()
+            is SvgSvgElement -> Pane()
             is SvgGElement -> Group()
-            is SvgStyleElement -> TODO() // Group()          // ignore
+            is SvgStyleElement -> Group()
 //            is SvgTextNode -> myDoc.createTextNode(null)
 //            is SvgTSpanElement -> SVGOMTSpanElement(null, myDoc)
-            is SvgDefsElement -> Group() // ignore
+            is SvgDefsElement -> Group()
 //            is SvgClipPathElement -> SVGOMClipPathElement(null, myDoc)
-            is SvgImageElement -> TODO() // ImageView()
+            is SvgImageElement -> Image()
             else -> throw IllegalArgumentException("Unsupported source svg element: ${source::class.simpleName}")
         }
     }
 
-    //fun getButton(evt: MouseEvent): Button {
-    //    return when (evt.button) {
-    //        PRIMARY -> Button.LEFT
-    //        MIDDLE -> Button.MIDDLE
-    //        SECONDARY -> Button.RIGHT
-    //        else -> Button.NONE
-    //    }
-    //}
-
-    //fun getModifiers(evt: MouseEvent): KeyModifiers {
-    //    val ctrlKey = evt.isControlDown
-    //    val altKey = evt.isAltDown
-    //    val shiftKey = evt.isShiftDown
-    //    val metaKey = evt.isMetaDown
-    //    return KeyModifiers(ctrlKey, altKey, shiftKey, metaKey)
-    //}
-
     fun setAttribute(target: Element, name: String, value: Any?) {
         val attrMapping = ATTR_MAPPINGS[target::class]
         attrMapping?.setAttribute(target, name, value)
-            //?: throw IllegalArgumentException("Unsupported target: ${target::class}")
+        //?: throw IllegalArgumentException("Unsupported target: ${target::class}")
             ?: println("Unsupported target: ${target::class}")
+    }
+
+    fun copyAttributes(source: SvgElement, target: SvgElement) {
+        for (attributeSpec in source.attributeKeys) {
+            @Suppress("UNCHECKED_CAST")
+            val spec = attributeSpec as SvgAttributeSpec<Any?>
+            target.setAttribute(spec, source.getAttribute(attributeSpec).get())
+        }
     }
 }
 

@@ -14,7 +14,7 @@ import jetbrains.datalore.vis.svg.SvgElement
 import jetbrains.datalore.vis.svg.SvgElementListener
 import jetbrains.datalore.vis.svg.event.SvgAttributeEvent
 import jetbrains.datalore.vis.svg.event.SvgEventSpec
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Element
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Element
 
 open class SvgElementMapper<SourceT : SvgElement, TargetT : Element>(
     source: SourceT,
@@ -26,8 +26,10 @@ open class SvgElementMapper<SourceT : SvgElement, TargetT : Element>(
 
 
     open fun setTargetAttribute(name: String, value: Any?) {
-        Utils.setAttribute(target, name, value)
+        SvgUtils.setAttribute(target, name, value)
     }
+
+    open fun applyStyle() {}
 
     override fun registerSynchronizers(conf: SynchronizersConfiguration) {
         super.registerSynchronizers(conf)
@@ -36,6 +38,8 @@ open class SvgElementMapper<SourceT : SvgElement, TargetT : Element>(
             private var myReg: Registration? = null
 
             override fun attach(ctx: SynchronizerContext) {
+                applyStyle()
+
                 myReg = source.addListener(object : SvgElementListener {
                     override fun onAttrSet(event: SvgAttributeEvent<*>) {
                         setTargetAttribute(event.attrSpec.name, event.newValue)

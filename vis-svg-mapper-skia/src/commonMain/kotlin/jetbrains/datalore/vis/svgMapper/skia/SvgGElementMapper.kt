@@ -8,7 +8,7 @@ package jetbrains.datalore.vis.svgMapper.skia
 import jetbrains.datalore.mapper.core.Synchronizers
 import jetbrains.datalore.vis.svg.SvgGElement
 import jetbrains.datalore.vis.svgMapper.SvgNodeSubtreeGeneratingSynchronizer
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Group
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Group
 
 internal class SvgGElementMapper(
     source: SvgGElement,
@@ -20,7 +20,7 @@ internal class SvgGElementMapper(
         super.registerSynchronizers(conf)
 
         if (!source.isPrebuiltSubtree) {
-            val targetList = Utils.elementChildren(target)
+            val targetList = SvgUtils.elementChildren(target)
             conf.add(
                 Synchronizers.forObservableRole(
                     this,

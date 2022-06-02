@@ -3,10 +3,9 @@
  * Use of this source code is governed by the MIT license that can be found in the LICENSE file.
  */
 
-package jetbrains.datalore.vis.svgMapper.skia.drawable
+package jetbrains.datalore.vis.svgMapper.skia.drawing
 
 import org.jetbrains.skia.Canvas
-import org.jetbrains.skia.Paint
 import org.jetbrains.skia.Rect
 
 class Rectangle: Figure() {
@@ -14,11 +13,12 @@ class Rectangle: Figure() {
     var y: Float by visualProp(0.0f)
     var width: Float by visualProp(0.0f)
     var height: Float by visualProp(0.0f)
+    private val rect: Rect by dependencyProp(Rectangle::x, Rectangle::y, Rectangle::width, Rectangle::height) {
+        Rect.makeXYWH(x, y, width, height)
+    }
 
-    override fun onDraw(canvas: Canvas?) {
-        canvas!!.drawRect(
-            Rect.makeXYWH(x, y, width, height),
-            Paint()
-        )
+    override fun doDraw(canvas: Canvas) {
+        fillPaint?.let { canvas.drawRect(rect, it) }
+        strokePaint?.let { canvas.drawRect(rect, it) }
     }
 }

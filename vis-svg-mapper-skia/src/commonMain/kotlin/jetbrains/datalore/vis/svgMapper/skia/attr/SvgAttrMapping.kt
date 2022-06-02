@@ -5,22 +5,25 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.attr
 
+import jetbrains.datalore.base.geometry.DoubleRectangle
 import jetbrains.datalore.vis.svg.*
-import jetbrains.datalore.vis.svgMapper.skia.drawable.Element
+import jetbrains.datalore.vis.svgMapper.skia.SvgTransformParser.parseSvgTransform
+import jetbrains.datalore.vis.svgMapper.skia.drawing.Element
+import jetbrains.datalore.vis.svgMapper.skia.drawing.SkPath
+import org.jetbrains.skia.Rect
 
 internal abstract class SvgAttrMapping<in TargetT : Element> {
     open fun setAttribute(target: TargetT, name: String, value: Any?) {
         when (name) {
             SvgGraphicsElement.VISIBILITY.name -> TODO() //target.isVisible = visibilityAsBoolean(value)
             SvgGraphicsElement.OPACITY.name -> TODO() //target.opacity = asDouble(value)
-            SvgGraphicsElement.CLIP_BOUNDS_JFX.name -> TODO() //target.clip = (value as? DoubleRectangle)?.run { Rectangle(left, top, width, height) }
-            SvgGraphicsElement.CLIP_PATH.name -> Unit // TODO: ignored
-
+            SvgGraphicsElement.CLIP_BOUNDS_JFX.name -> target.clipPath = (value as? DoubleRectangle)?.let {
+                SkPath().addRect(Rect.makeLTRB(it.left.toFloat(), it.top.toFloat(), it.right.toFloat(), it.bottom.toFloat()))
+            }
+            SvgGraphicsElement.CLIP_PATH.name -> Unit // Not supported.
             SvgConstants.SVG_STYLE_ATTRIBUTE -> setStyle(value as? String ?: "", target)
             SvgStylableElement.CLASS.name -> setStyleClass(value as String?, target)
-
             SvgTransformable.TRANSFORM.name -> setTransform((value as SvgTransform).toString(), target)
-
             else -> throw IllegalArgumentException("Unsupported attribute `$name` in ${target::class.simpleName}")
         }
     }
@@ -36,27 +39,19 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
 
     companion object {
         private fun setStyle(value: String, target: Element) {
-            println("setStyle is not implemented")
+            println("setStyle is not implemented. style=`$value`")
 
             //val valueFx = value.split(";").joinToString(";") { if (it.isNotEmpty()) "-fx-${it.trim()}" else it }
             //target.style = valueFx
         }
 
         private fun setStyleClass(value: String?, target: Element) {
-            println("setStyleClass is not implemented")
-
-            //target.styleClass.clear()
-            //if (value != null) {
-            //    target.styleClass.addAll(value.split(" "))
-            //}
+            target.styleClass = value?.split(" ")
         }
 
         private fun setTransform(value: String, target: Element) {
-            println("setTransform is not implemented")
-
-            //target.transforms.clear()
-            //val transforms = parseSvgTransform(value)
-            //target.transforms.addAll(unScaleTransforms(transforms))
+            target.transforms.clear()
+            target.transforms.addAll(parseSvgTransform(value))
         }
 
         val Any.asFloat: Float

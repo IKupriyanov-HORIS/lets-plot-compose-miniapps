@@ -3,7 +3,14 @@ package org.jetbrains.skiko.sample
 import android.app.Activity
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams.MATCH_PARENT
+import android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+import android.widget.TextView
+import jetbrains.datalore.vis.svg.SvgElement
 import jetbrains.datalore.vis.svg.SvgSvgElement
+import jetbrains.datalore.vis.svgMapper.demo.DemoModelA
+import jetbrains.datalore.vis.svgMapper.demo.DemoModelB
+import jetbrains.datalore.vis.svgMapper.demo.DemoModelC
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,21 +18,28 @@ class MainActivity : Activity() {
 
         val layout = LinearLayout(this)
         layout.orientation = LinearLayout.VERTICAL
-        layout.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layout.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         setContentView(layout, layout.layoutParams)
 
-        val holder = LinearLayout(this).apply {
-            //layoutParams = ViewGroup.LayoutParams(1000, 1200)
-        }
-        layout.addView(holder)
+        layout.addView(addSvg("Demo A", DemoModelA.createModel()))
+        layout.addView(addSvg("Demo B", DemoModelB.createModel()))
+        layout.addView(addSvg("Demo C", DemoModelC.createModel()))
+    }
 
-        //val skiaLayer = SkiaLayer().apply { gesturesToListen = SkikoGestureEventKind.values() }
-        //skiaLayer.skikoView = GenericSkikoView(skiaLayer, RotatingSquare())
-        //skiaLayer.attachTo(holder)
+    private fun addSvg(title: String, svg: SvgElement): LinearLayout {
+        val svgContainer = LinearLayout(this)
+        svgContainer.orientation = LinearLayout.VERTICAL
+        svgContainer.layoutParams = LinearLayout.LayoutParams(500, 500)
+        svgContainer.addView(TextView(this).apply {
+            text = title
+        })
 
-        val svgRoot = SvgSvgElement(500.0, 500.0)
-        svgRoot.children().add(DemoModelA.createModel())
-        val v = SkiaMapperLayer(svgRoot)
-        v.attachTo(holder)
+        SkiaMapperLayer(
+            SvgSvgElement(500.0, 500.0).apply {
+                children().add(svg)
+            }
+        ).attachTo(svgContainer)
+
+        return svgContainer
     }
 }

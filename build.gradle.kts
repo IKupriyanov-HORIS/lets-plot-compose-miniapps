@@ -1,4 +1,4 @@
-import org.yaml.snakeyaml.Yaml
+import java.util.*
 
 buildscript {
 
@@ -14,12 +14,10 @@ plugins {
     id("com.android.application") apply false
 }
 
-
-if (project.file("build_settings.yml").exists()) {
-    println("parsing build settings")
-    project.extra["buildSettings"] = Yaml().load(project.file("build_settings.yml").inputStream())
-} else {
-    println("no build settings")
+val localProps = Properties()
+if (project.file("local.properties").exists()) {
+    localProps.load(project.file("local.properties").inputStream())
+    project.extra["local"] = localProps
 }
 
 allprojects {
@@ -30,8 +28,8 @@ allprojects {
         mavenCentral()
         val buildSettings: Map<String, Any?>? by project
 
-        buildSettings?.get("mavenDevRepo")?.let {
-            maven {
+        localProps.get("maven.repo.local")?.let {
+            mavenLocal {
                 println("${project.name}: local maven repo: $it")
                 url = uri(it)
             }
