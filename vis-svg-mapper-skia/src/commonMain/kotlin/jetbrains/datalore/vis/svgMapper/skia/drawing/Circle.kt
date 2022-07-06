@@ -6,6 +6,7 @@
 package jetbrains.datalore.vis.svgMapper.skia.drawing
 
 import org.jetbrains.skia.Canvas
+import org.jetbrains.skia.Rect
 
 class Circle: Figure() {
     var centerX: Float by visualProp(0.0f)
@@ -19,5 +20,14 @@ class Circle: Figure() {
         strokePaint?.let {
             canvas.drawCircle(centerX, centerY, radius, it)
         }
+    }
+
+    override fun doGetBounds(): Rect {
+        return Rect.makeXYWH(
+            centerX - radius,
+            centerY - radius,
+            radius * 2,
+            radius * 2
+        ).offset(absoluteOffsetX, absoluteOffsetY)
     }
 }

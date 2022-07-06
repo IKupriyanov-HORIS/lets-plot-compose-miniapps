@@ -39,7 +39,9 @@ object Base64 {
     fun decode(data: String): ByteArray {
         require(data.length % 4 == 0) { "Invalid string length: ${data.length}" }
 
-        val result = mutableListOf<Byte>()
+        val buffer = ByteArray(data.length / 4 * 3 - data.takeLast(2).count(padChar::equals))
+        var i = 0
+
         data.windowed(4, step = 4)
             .forEach() { block ->
                 val word =
@@ -52,12 +54,12 @@ object Base64 {
                 val b2 = (word ushr 8).toByte()
                 val b3 = word.toByte()
 
-                result.add(b1)
-                if (block[2] != padChar) result.add(b2)
-                if (block[3] != padChar) result.add(b3)
+                buffer[i++] = b1
+                if (block[2] != padChar) buffer[i++] = b2
+                if (block[3] != padChar) buffer[i++] = b3
             }
 
-        return result.toByteArray()
+        return buffer
     }
 
     fun ByteArray.encodeToBase64(): String = encode(this)

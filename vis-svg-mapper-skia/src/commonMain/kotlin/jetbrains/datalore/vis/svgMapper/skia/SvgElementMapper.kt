@@ -93,22 +93,4 @@ open class SvgElementMapper<SourceT : SvgElement, TargetT : Element>(
                 })
         )
     }
-
-//    private fun addMouseHandler(spec: SvgEventSpec, eventType: EventType<MouseEventFx>) {
-//        val listener = EventHandler<Event> { evt ->
-//            evt.consume()
-//            val e = evt as MouseEventFx
-//            source.dispatch(
-//                spec,
-//                MouseEvent(e.sceneX.toInt(), e.sceneY.toInt(), Utils.getButton(e), Utils.getModifiers(e))
-//            )
-//        }
-//
-//        target.addEventFilter(eventType, listener)
-//        myHandlerRegs!![spec] = object : Registration() {
-//            override fun doRemove() {
-//                target.removeEventFilter(eventType, listener)
-//            }
-//        }
-//    }
 }

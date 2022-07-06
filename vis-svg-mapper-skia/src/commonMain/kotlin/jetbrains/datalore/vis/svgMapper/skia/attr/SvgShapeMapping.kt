@@ -7,6 +7,7 @@ package jetbrains.datalore.vis.svgMapper.skia.attr
 
 import jetbrains.datalore.base.values.Color
 import jetbrains.datalore.base.values.Color.Companion.BLACK
+import jetbrains.datalore.vis.svg.SvgColors
 import jetbrains.datalore.vis.svg.SvgConstants
 import jetbrains.datalore.vis.svg.SvgShape
 import jetbrains.datalore.vis.svgMapper.skia.asSkiaColor
@@ -38,25 +39,29 @@ internal abstract class SvgShapeMapping<TargetT : Figure> : SvgAttrMapping<Targe
     companion object {
         // This will reset fill color to black if color is defined via style
         private val fillGet = { shape: Figure -> { shape.fill ?: BLACK.asSkiaColor } }
-        private val fillSet = { shape: Figure -> { c: Color4f -> shape.fill = c } }
+        private val fillSet = { shape: Figure -> { c: Color4f? -> shape.fill = c } }
         // This will reset stroke color to black if color is defined via style
         private val strokeGet = { shape: Figure -> { shape.stroke ?: BLACK.asSkiaColor } }
-        private val strokeSet = { shape: Figure -> { c: Color4f -> shape.stroke = c } }
+        private val strokeSet = { shape: Figure -> { c: Color4f? -> shape.stroke = c } }
 
 
         /**
          * value : the color name (string) or SvgColor (jetbrains.datalore.vis.svg)
          */
-        private fun setColor(value: Any?, get: () -> Color4f, set: (Color4f) -> Unit) {
-            if (value == null) return
+        private fun setColor(value: Any?, get: () -> Color4f?, set: (Color4f?) -> Unit) {
+            if (value == SvgColors.CURRENT_COLOR) return
 
-            val colorString = value.toString().lowercase()
-            val newColor =
-                namedColors[colorString]
-                    ?: Color.parseOrNull(colorString)
-                    ?: error("Unsupported color value: $colorString")
-
-            set(newColor.asSkiaColor.withA(get().a))
+            val newColor: Color? = when (value) {
+                null -> null
+                SvgColors.NONE -> null
+                else -> {
+                    val colorString = value.toString().lowercase()
+                    namedColors[colorString]
+                        ?: Color.parseOrNull(colorString)
+                        ?: error("Unsupported color value: $colorString")
+                }
+            }
+            set(newColor?.asSkiaColor?.withA(get()?.a ?: 1.0f))
         }
 
 

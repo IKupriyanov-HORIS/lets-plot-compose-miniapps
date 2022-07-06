@@ -7,9 +7,8 @@ package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.unsupported.UNSUPPORTED
 import jetbrains.datalore.vis.svg.SvgPathData.Action
-
 import jetbrains.datalore.vis.svg.SvgTransform
-import jetbrains.datalore.vis.svgMapper.skia.drawing.*
+import org.jetbrains.skia.Matrix33
 import org.jetbrains.skia.Point
 import kotlin.math.PI
 import kotlin.math.sin
@@ -33,42 +32,42 @@ internal object SvgTransformParser {
 
     private fun toRadians(degrees: Float): Float = (degrees * PI / 180).toFloat()
 
-    fun parseSvgTransform(svgTransform: String): List<Transform> {
+    fun parseSvgTransform(svgTransform: String): List<Matrix33> {
         val results = parseTransform(svgTransform)
 
-        val transforms = ArrayList<Transform>()
+        val transforms = ArrayList<Matrix33>()
         for (res in results) {
-            val transform: Transform =
+            val transform: Matrix33 =
                 when (res.name) {
                     SvgTransform.SCALE -> {
                         val scaleX = res.getParam(SCALE_X)!!
                         val scaleY = res.getParam(SCALE_Y) ?: scaleX
-                        Scale(scaleX, scaleY)
+                        Matrix33.makeScale(scaleX, scaleY)
                     }
 
                     SvgTransform.SKEW_X -> {
                         val angle = res.getParam(SKEW_X_ANGLE)!!
                         val factor = sin(toRadians(angle))
-                        Skew(factor, 0.0f)
+                        Matrix33.makeSkew(factor, 0.0f)
                     }
 
                     SvgTransform.SKEW_Y -> {
                         val angle = res.getParam(SKEW_Y_ANGLE)!!
                         val factor = sin(toRadians(angle))
-                        Skew(0.0f, factor)
+                        Matrix33.makeSkew(0.0f, factor)
                     }
 
                     SvgTransform.ROTATE -> {
                         val angle = res.getParam(ROTATE_ANGLE)!!
                         val pivotX = if (res.paramCount == 3) res.getParam(ROTATE_X)!! else 0.0f
                         val pivotY = if (res.paramCount == 3) res.getParam(ROTATE_Y)!! else 0.0f
-                        Rotate(angle, pivotX, pivotY)
+                        Matrix33.makeRotate(angle, pivotX, pivotY)
                     }
 
                     SvgTransform.TRANSLATE -> {
                         val dX = res.getParam(TRANSLATE_X)!!
                         val dY = res.getParam(TRANSLATE_Y) ?: 0.0f
-                        Translate(dX, dY)
+                        Matrix33.makeTranslate(dX, dY)
                     }
 
                     SvgTransform.MATRIX -> UNSUPPORTED("We don't use MATRIX")

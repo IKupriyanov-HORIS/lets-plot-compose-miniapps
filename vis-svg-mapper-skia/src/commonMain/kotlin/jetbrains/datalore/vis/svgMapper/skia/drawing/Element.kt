@@ -5,86 +5,48 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.drawing
 
-import jetbrains.datalore.base.observable.collections.CollectionItemEvent
-import jetbrains.datalore.base.observable.collections.list.ObservableArrayList
-import jetbrains.datalore.base.observable.event.EventHandler
-import org.jetbrains.skia.Canvas
-import org.jetbrains.skia.Drawable
-import org.jetbrains.skia.Point
-import org.jetbrains.skia.Rect
+import org.jetbrains.skia.*
 import kotlin.properties.Delegates.observable
-import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 typealias SkPath = org.jetbrains.skia.Path
+
+const val INIFITY_BOUNDS = false
+
 abstract class Element: Drawable() {
+    var parent: Parent? by visualProp(null)
     var styleClass: List<String>? by visualProp(null)
-    var parent: Element? by visualProp(null)
-    var transforms = ObservableArrayList<Transform>()
+    var transform: Matrix33? by visualProp(null)
     var clipPath: SkPath? by visualProp(null)
+    var isVisible: Boolean by visualProp(true)
 
     private val propertyDeps = mutableMapOf<KProperty<*>, MutableList<DependencyProperty<*>>>()
 
-    init {
-        transforms.addHandler(object : EventHandler<CollectionItemEvent<out Transform>> {
-            override fun onEvent(event: CollectionItemEvent<out Transform>) {
-                repaint()
-            }
-        })
-    }
-
-    override fun onDraw(canvas: Canvas?) {
+    final override fun onDraw(canvas: Canvas?) {
         if (canvas == null) return
+        if (!isVisible) return
+
         canvas.save()
-        applyTransforms(canvas)
+        transform?.let(canvas::concat)
         clipPath?.let(canvas::clipPath)
         doDraw(canvas)
         canvas.restore()
     }
 
-    protected fun applyTransforms(canvas: Canvas) {
-        transforms.forEach {
-            it.apply(canvas)
+    final override fun onGetBounds(): Rect {
+        return if (INIFITY_BOUNDS) {
+            Rect.Companion.makeWH(1000f, 1000f)
+        } else {
+            doGetBounds()
         }
     }
 
     protected open fun doDraw(canvas: Canvas) {}
+    protected open fun doGetBounds(): Rect { return Rect.makeWH(0.0f, 0.0f)}
 
     protected fun repaint() {
         notifyDrawingChanged()
-    }
-
-    protected fun getTranslate(): Point {
-        var p = parent
-        var offsetX = 0.0f
-        var offsetY = 0.0f
-
-        //while (p != null) {
-        //    offsetX += p.x
-        //    offsetY += p.y
-        //}
-
-        return Point(offsetX, offsetY)
-    }
-
-    class DependencyProperty<T>(
-        private val delegate: () -> T
-    ) : ReadOnlyProperty<Any?, T> {
-        private var isDirty: Boolean = false
-        private var value: T = delegate()
-
-        fun invalidate() {
-            isDirty = true
-        }
-
-        override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-            if (isDirty) {
-                isDirty = false
-                value = delegate()
-            }
-            return value
-        }
     }
 
     protected fun <T> visualProp(initialValue: T): ReadWriteProperty<Any?, T> =
@@ -93,7 +55,7 @@ abstract class Element: Drawable() {
                 this.propertyDeps.getOrElse(property, ::emptyList).forEach(DependencyProperty<*>::invalidate)
                 this.repaint()
             }
-    }
+        }
 
     protected fun <T> dependencyProp(vararg deps: KProperty<*>, delegate: () -> T): DependencyProperty<T> =
         DependencyProperty<T>(delegate).also { prop ->
@@ -102,11 +64,7 @@ abstract class Element: Drawable() {
             }
         }
 
-    override fun onGetBounds(): Rect {
-        var root = parent
-        while (root?.parent != null) {
-            root = parent
-        }
-        return root?.onGetBounds() ?: Rect(0.0f, 0.0f, 0.0f, 0.0f)
+    override fun toString(): String {
+        return "class: ${this::class.simpleName}, absOffset($absoluteOffsetX, $absoluteOffsetY)"
     }
 }

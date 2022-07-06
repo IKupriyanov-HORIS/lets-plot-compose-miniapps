@@ -12,6 +12,12 @@ import jetbrains.datalore.base.observable.event.EventHandler
 import org.jetbrains.skia.Canvas
 
 abstract class Parent: Element() {
+    protected val translateX: Float = transform?.translate?.x ?: 0f
+    protected val translateY: Float = transform?.translate?.y ?: 0f
+
+    abstract val offsetX: Float
+    abstract val offsetY: Float
+
     val children: ObservableList<Element> = ObservableArrayList()
 
     init {

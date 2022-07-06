@@ -21,4 +21,8 @@ class Rectangle: Figure() {
         fillPaint?.let { canvas.drawRect(rect, it) }
         strokePaint?.let { canvas.drawRect(rect, it) }
     }
+
+    override fun doGetBounds(): Rect {
+        return Rect.makeXYWH(x, y, width, height).offset(absoluteOffsetX, absoluteOffsetY)
+    }
 }

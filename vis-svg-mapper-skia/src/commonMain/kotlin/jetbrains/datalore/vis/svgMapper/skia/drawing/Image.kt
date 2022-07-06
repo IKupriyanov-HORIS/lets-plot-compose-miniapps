@@ -27,4 +27,8 @@ class Image: Element() {
             }
         }
     }
+
+    override fun doGetBounds(): Rect {
+        return Rect.makeXYWH(x, y, width, height).offset(absoluteOffsetX, absoluteOffsetY)
+    }
 }

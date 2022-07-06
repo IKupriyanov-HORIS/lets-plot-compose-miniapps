@@ -1,4 +1,4 @@
-package me.ikupriyanov.demo
+package jetnrains.datalore.vis.swing.skia
 
 import jetbrains.datalore.base.registration.Disposable
 import jetbrains.datalore.mapper.core.MappingContext
@@ -6,8 +6,11 @@ import jetbrains.datalore.vis.svg.SvgNodeContainer
 import jetbrains.datalore.vis.svg.SvgSvgElement
 import jetbrains.datalore.vis.svgMapper.skia.SvgSkiaPeer
 import jetbrains.datalore.vis.svgMapper.skia.SvgSvgElementMapper
+import jetbrains.datalore.vis.svgMapper.skia.drawing.traceTree
 import org.jetbrains.skia.Canvas
 import org.jetbrains.skiko.SkiaLayer
+import org.jetbrains.skiko.SkikoPointerEvent
+import org.jetbrains.skiko.SkikoPointerEventKind
 import org.jetbrains.skiko.SkikoView
 import java.awt.Color
 import java.awt.Dimension
@@ -17,8 +20,7 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
 class SkiaMapperPanel(
-    private val svg: SvgSvgElement,
-    private val density: Float = 1.0f
+    private val svg: SvgSvgElement
 ) : JPanel(), Disposable {
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
     private val skiaLayer = SkiaLayer()
@@ -29,15 +31,33 @@ class SkiaMapperPanel(
 
         val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
         rootMapper.attachRoot(MappingContext())
-        val plotView = object : SkikoView {
+
+        skiaLayer.addView(object : SkikoView {
             override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
-                canvas.clear(0)
-                canvas.scale(density, density)
+                val contentScale = skiaLayer.contentScale
+                canvas.scale(contentScale, contentScale)
+
+                traceTree(rootMapper.target)
                 canvas.drawDrawable(rootMapper.target)
             }
-        }
 
-        skiaLayer.addView(plotView)
+            override fun onPointerEvent(event: SkikoPointerEvent) {
+                println("onPointerEvent() - start")
+                when (event.kind) {
+                    SkikoPointerEventKind.UP -> mouseListeners.forEach { it.mouseReleased(event.platform) }
+                    SkikoPointerEventKind.DOWN -> mouseListeners.forEach { it.mousePressed(event.platform) }
+                    SkikoPointerEventKind.MOVE -> mouseMotionListeners.forEach { it.mouseMoved(event.platform) }
+                    SkikoPointerEventKind.DRAG -> mouseMotionListeners.forEach { it.mouseDragged(event.platform) }
+                    SkikoPointerEventKind.ENTER -> mouseListeners.forEach { it.mouseEntered(event.platform) }
+                    SkikoPointerEventKind.EXIT -> mouseListeners.forEach { it.mouseExited(event.platform) }
+                    SkikoPointerEventKind.SCROLL -> Unit // ignore
+                    SkikoPointerEventKind.UNKNOWN -> TODO()
+                }
+                skiaLayer.needRedraw()
+                println("onPointerEvent() - end")
+            }
+        })
+
         skiaLayer.attachTo(this)
         SwingUtilities.invokeLater(skiaLayer::needRedraw)
     }

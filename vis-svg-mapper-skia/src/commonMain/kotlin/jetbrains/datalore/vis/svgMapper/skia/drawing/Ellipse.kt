@@ -27,4 +27,8 @@ class Ellipse: Figure() {
         fillPaint?.let { canvas.drawOval(rect, it) }
         strokePaint?.let { canvas.drawOval(rect, it) }
     }
+
+    override fun doGetBounds(): Rect {
+        return Rect.makeXYWH(centerX - radiusX, centerY - radiusY, radiusX * 2, radiusY * 2).offset(absoluteOffsetX, absoluteOffsetY)
+    }
 }

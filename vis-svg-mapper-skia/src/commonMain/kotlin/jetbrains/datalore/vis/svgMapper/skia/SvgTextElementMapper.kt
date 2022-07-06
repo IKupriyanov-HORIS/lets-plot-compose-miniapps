@@ -67,8 +67,8 @@ internal class SvgTextElementMapper(
         if (styleSheet == null) {
             return
         }
-        val className = target.parent?.styleClass?.firstOrNull()
-        if (!className.isNullOrEmpty()) {
+        val className = source.fullClass()
+        if (className.isNotEmpty()) {
             val style = styleSheet.getTextStyle(className)
             target.fill = style.color.asSkiaColor
             target.fontFamily = style.family.toString()

@@ -5,6 +5,7 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.drawing
 
+import org.jetbrains.skia.Canvas
 import org.jetbrains.skia.Rect
 
 class Pane: Parent() {
@@ -12,8 +13,17 @@ class Pane: Parent() {
     var y: Float by visualProp(0.0f)
     var width: Float by visualProp(0.0f)
     var height: Float by visualProp(0.0f)
+    override val offsetX: Float get() = translateX + x
+    override val offsetY: Float get() = translateY + y
 
-    override fun onGetBounds(): Rect {
-        return Rect(x, y, x + width, y + height)
+    override fun doDraw(canvas: Canvas) {
+        canvas.save()
+        canvas.translate(x, y)
+        super.doDraw(canvas)
+        canvas.restore()
+    }
+
+    override fun doGetBounds(): Rect {
+        return Rect.makeXYWH(x, y, width, height).offset(absoluteOffsetX, absoluteOffsetY)
     }
 }

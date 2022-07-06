@@ -11,6 +11,7 @@ fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         MaterialTheme {
             Svg(DemoModelA.createModel(), density = 2.0)
+            //jetbrains.datalore.vis.compose.skia.Svg(DemoModelA.createModel(), density = 2.0)
         }
     }
 }

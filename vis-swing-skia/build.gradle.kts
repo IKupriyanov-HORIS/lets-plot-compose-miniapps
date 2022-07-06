@@ -3,6 +3,10 @@ plugins {
     kotlin("jvm")
 }
 
+group = "ikupriyanov"
+version = "1.0-SNAPSHOT"
+
+
 val lets_plot_version: String by project
 val skikoVersion = extra["skiko.version"] as String
 
@@ -27,17 +31,16 @@ val host = "${hostOs}-${hostArch}"
 dependencies {
     implementation("org.jetbrains.skiko:skiko:$skikoVersion")
     implementation(project(":vis-svg-mapper-skia"))
-    implementation("org.jetbrains.lets-plot:plot-base-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:base:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version")
-    implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:vis-canvas:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-swing-common:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-config:$lets_plot_version")
     implementation("org.jetbrains.skiko:skiko-awt-runtime-$hostOs-$hostArch:$skikoVersion")
-    implementation(project(":vis-swing-skia"))
 }

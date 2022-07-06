@@ -6,7 +6,6 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("maven-publish")
-    //id("org.jetbrains.compose")
 }
 
 kotlin {
@@ -19,6 +18,7 @@ kotlin {
 
                 compileOnly("org.jetbrains.lets-plot:base:$lets_plot_version")
                 compileOnly("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
+                compileOnly("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
                 compileOnly("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
                 compileOnly("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
                 compileOnly("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")

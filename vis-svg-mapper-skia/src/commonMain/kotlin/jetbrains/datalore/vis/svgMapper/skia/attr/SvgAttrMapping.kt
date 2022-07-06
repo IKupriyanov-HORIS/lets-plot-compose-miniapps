@@ -10,12 +10,13 @@ import jetbrains.datalore.vis.svg.*
 import jetbrains.datalore.vis.svgMapper.skia.SvgTransformParser.parseSvgTransform
 import jetbrains.datalore.vis.svgMapper.skia.drawing.Element
 import jetbrains.datalore.vis.svgMapper.skia.drawing.SkPath
+import org.jetbrains.skia.Matrix33
 import org.jetbrains.skia.Rect
 
 internal abstract class SvgAttrMapping<in TargetT : Element> {
     open fun setAttribute(target: TargetT, name: String, value: Any?) {
         when (name) {
-            SvgGraphicsElement.VISIBILITY.name -> TODO() //target.isVisible = visibilityAsBoolean(value)
+            SvgGraphicsElement.VISIBILITY.name -> target.isVisible = visibilityAsBoolean(value)
             SvgGraphicsElement.OPACITY.name -> TODO() //target.opacity = asDouble(value)
             SvgGraphicsElement.CLIP_BOUNDS_JFX.name -> target.clipPath = (value as? DoubleRectangle)?.let {
                 SkPath().addRect(Rect.makeLTRB(it.left.toFloat(), it.top.toFloat(), it.right.toFloat(), it.bottom.toFloat()))
@@ -24,6 +25,8 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
             SvgConstants.SVG_STYLE_ATTRIBUTE -> setStyle(value as? String ?: "", target)
             SvgStylableElement.CLASS.name -> setStyleClass(value as String?, target)
             SvgTransformable.TRANSFORM.name -> setTransform((value as SvgTransform).toString(), target)
+            SvgElement.ID.name -> Unit // ignore it?
+
             else -> throw IllegalArgumentException("Unsupported attribute `$name` in ${target::class.simpleName}")
         }
     }
@@ -50,8 +53,7 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
         }
 
         private fun setTransform(value: String, target: Element) {
-            target.transforms.clear()
-            target.transforms.addAll(parseSvgTransform(value))
+            target.transform = parseSvgTransform(value).fold(Matrix33.IDENTITY, Matrix33::makeConcat)
         }
 
         val Any.asFloat: Float
