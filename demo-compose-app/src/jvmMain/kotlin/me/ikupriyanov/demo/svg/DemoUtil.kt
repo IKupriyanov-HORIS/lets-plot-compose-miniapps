@@ -1,4 +1,4 @@
-package jetbrains.datalore.vis.compose.skia
+package me.ikupriyanov.demo.svg
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
@@ -13,9 +13,8 @@ import jetbrains.datalore.vis.svg.SvgSvgElement
 import jetbrains.datalore.vis.svgMapper.skia.SvgSkiaPeer
 import jetbrains.datalore.vis.svgMapper.skia.SvgSvgElementMapper
 
-
 @Composable
-fun Svg(svg: SvgSvgElement, width: Double? = null, height: Double? = null, density: Double = 1.0) {
+fun Svg(svg: SvgSvgElement, width: Double? = null, height: Double? = null, density: Float = 1f) {
     val nodeContainer = SvgNodeContainer(svg)  // attach root
     val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
     rootMapper.attachRoot(MappingContext())
