@@ -17,14 +17,13 @@ if (project.file("local.properties").exists()) {
 }
 
 allprojects {
-    group = "ikupriyanov"
+    group = "me.ikupriyanov"
     version = "1.0-SNAPSHOT"
 
     repositories {
         mavenCentral()
-        localProps.get("maven.repo.local")?.let {
+        localProps["maven.repo.local"]?.let {
             mavenLocal {
-                println("${project.name}: local maven repo: $it")
                 url = uri(it)
             }
         }

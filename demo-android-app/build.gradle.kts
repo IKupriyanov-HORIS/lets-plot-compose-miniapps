@@ -13,7 +13,6 @@ buildscript {
 }
 
 repositories {
-    mavenLocal()
     google()
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -49,7 +48,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        applicationId = "me.ikupriyanov.demo"
+        applicationId = "me.ikupriyanov.letsPlot.demo"
 
         ndk {
             abiFilters += listOf("x86_64", "arm64-v8a")
@@ -68,22 +67,17 @@ android {
     }
 }
 
-var version = if (project.hasProperty("skiko.version")) {
-    project.properties["skiko.version"] as String
-} else {
-    "0.0.0-SNAPSHOT"
-}
-val lets_plot_version: String by project
+val skiko_version: String by extra
+val lets_plot_version: String by extra
 
 // ./gradlew -Pskiko.android.enabled=true \
 //    publishSkikoJvmRuntimeAndroidX64PublicationToMavenLocal \
 //    publishSkikoJvmRuntimeAndroidArm64PublicationToMavenLocal \
 //    publishAndroidPublicationToMavenLocal
 dependencies {
-    implementation("org.jetbrains.skiko:skiko-android:$version")
-
-    skikoNativeX64("org.jetbrains.skiko:skiko-android-runtime-x64:$version")
-    skikoNativeArm64("org.jetbrains.skiko:skiko-android-runtime-arm64:$version")
+    implementation("org.jetbrains.skiko:skiko-android:$skiko_version")
+    skikoNativeX64("org.jetbrains.skiko:skiko-android-runtime-x64:$skiko_version")
+    skikoNativeArm64("org.jetbrains.skiko:skiko-android-runtime-arm64:$skiko_version")
 
     implementation(project(":vis-svg-mapper-skia")) // causes dups.
     implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
@@ -91,6 +85,9 @@ dependencies {
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
+
+    // error: jetbrains.datalore.vis.StyleSheet found in modules jetified-lets-plot-batik-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-batik:2.5.1-alpha1) and jetified-lets-plot-common-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-common:2.5.1-alpha1)
+    // implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile>().configureEach {

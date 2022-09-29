@@ -7,7 +7,6 @@ package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.geometry.DoubleRectangle
 import jetbrains.datalore.base.geometry.DoubleVector
-import jetbrains.datalore.base.unsupported.UNSUPPORTED
 import jetbrains.datalore.mapper.core.Mapper
 import jetbrains.datalore.vis.StyleSheet
 import jetbrains.datalore.vis.svg.SvgLocatable
@@ -70,12 +69,12 @@ class SvgSkiaPeer : SvgPlatformPeer {
     }
 
     override fun getComputedTextLength(node: SvgTextContent): Double {
-        UNSUPPORTED("getComputedTextLength")
+        error("UNSUPPORTED: getComputedTextLength")
     }
 
     @Suppress("UNUSED_PARAMETER")
     private fun transformCoordinates(relative: SvgLocatable, point: DoubleVector, inverse: Boolean): DoubleVector {
-        UNSUPPORTED("getComputedTextLength")
+        error("UNSUPPORTED: transformCoordinates")
     }
 
     override fun invertTransform(relative: SvgLocatable, point: DoubleVector): DoubleVector {

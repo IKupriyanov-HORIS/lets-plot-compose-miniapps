@@ -1,4 +1,4 @@
-package me.ikupriyanov.demo
+package me.ikupriyanov.letsPlot.skia
 
 import jetbrains.datalore.mapper.core.MappingContext
 import jetbrains.datalore.vis.svg.SvgNodeContainer
@@ -10,8 +10,9 @@ import org.jetbrains.skiko.SkiaLayer
 import org.jetbrains.skiko.SkikoView
 
 class SkiaMapperLayer(
-    private val svg: SvgSvgElement
+    svg: SvgSvgElement
 ) : SkiaLayer() {
+    @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
 
     init {

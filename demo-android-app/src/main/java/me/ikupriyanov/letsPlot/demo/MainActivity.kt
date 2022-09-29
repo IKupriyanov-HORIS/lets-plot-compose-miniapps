@@ -1,4 +1,4 @@
-package me.ikupriyanov.demo
+package me.ikupriyanov.letsPlot.demo
 
 import android.app.Activity
 import android.os.Bundle
@@ -11,6 +11,7 @@ import jetbrains.datalore.vis.svg.SvgSvgElement
 import jetbrains.datalore.vis.svgMapper.demo.DemoModelA
 import jetbrains.datalore.vis.svgMapper.demo.DemoModelB
 import jetbrains.datalore.vis.svgMapper.demo.DemoModelC
+import me.ikupriyanov.letsPlot.skia.SkiaMapperLayer
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -16,8 +16,8 @@ object DemoModelA {
         svgRoot.children().add(createSlimGroup())
 
         val textStyles: Map<String, TextStyle> = mapOf(
-            "TEXT1" to TextStyle(FontFamily.SERIF, face = FontFace.ITALIC, size = 15.0, color = Color.BLUE),
-            "TEXT2" to TextStyle(FontFamily.SERIF, face = FontFace.BOLD, size = 20.0, color = Color.RED)
+            "TEXT1" to TextStyle(FontFamily.SERIF.name, face = FontFace.ITALIC, size = 15.0, color = Color.BLUE),
+            "TEXT2" to TextStyle(FontFamily.SERIF.name, face = FontFace.BOLD, size = 20.0, color = Color.RED)
         )
         svgRoot.children().add(createStyleElement(textStyles))
 
@@ -75,7 +75,7 @@ object DemoModelA {
     private fun createStyleElement(textStyles: Map<String, TextStyle>): SvgStyleElement {
         return SvgStyleElement(object : SvgCssResource {
             override fun css(): String {
-                return StyleSheet(textStyles, defaultFamily = FontFamily.SERIF.toString(), defaultSize = 15.0).toCSS()
+                return StyleSheet(textStyles, defaultFamily = FontFamily.SERIF.toString()).toCSS()
             }
         })
     }

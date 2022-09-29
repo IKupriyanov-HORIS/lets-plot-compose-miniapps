@@ -10,7 +10,7 @@ import androidx.compose.ui.window.application
 import jetbrains.datalore.plotDemo.model.plotConfig.Area
 
 
-fun main() = application {0
+fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         MaterialTheme {
             //Svg(DemoModelA.createModel(), density = 2.0)

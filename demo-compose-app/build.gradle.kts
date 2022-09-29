@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-val lets_plot_version: String by project
+val lets_plot_version: String by extra
 
 kotlin {
     jvm {}
@@ -16,27 +16,20 @@ kotlin {
                 implementation(compose.desktop.currentOs)
                 implementation(project(":vis-svg-mapper-skia"))
                 implementation(project(":vis-swing-skia"))
-                implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") // Mapper
-                implementation("org.jetbrains.lets-plot:base:$lets_plot_version") // HasParent
-                implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
-                implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version") // SimpleComposite
-                implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version") //
-                implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version") // runtime: SvgNodeSubtreeGeneratingSynchronizer
-                implementation("org.jetbrains.lets-plot:vis-swing-common:$lets_plot_version")
+
+                implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
                 implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version")
             }
         }
     }
 }
 
-compose.desktop {
-    application {
-        mainClass = "MainKt"
+compose.desktop.application {
+    mainClass = "me.ikupriyanov.demo.plot.AreaViewerSkiaKt"
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "demo-compose-app"
-            packageVersion = "1.0.0"
-        }
+    nativeDistributions {
+        targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        packageName = "lets-plot-compose-demo-app"
+        packageVersion = "1.0.0"
     }
 }

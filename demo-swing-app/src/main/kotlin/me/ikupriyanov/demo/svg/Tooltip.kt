@@ -83,9 +83,9 @@ fun main() {
  */
     val doc = SvgSvgElement()
     val textStyles: Map<String, TextStyle> = mapOf(
-        "tooltip-title" to TextStyle(FontFamily.SERIF, face = FontFace.BOLD, size = 14.0, color = Color.BLACK),
-        "tooltip-label" to TextStyle(FontFamily.SERIF, face = FontFace.NORMAL, size = 10.0, color = Color.GRAY),
-        "tooltip-text" to TextStyle(FontFamily.SERIF, face = FontFace.NORMAL, size = 10.0, color = Color.GRAY)
+        "tooltip-title" to TextStyle(FontFamily.SERIF.name, face = FontFace.BOLD, size = 14.0, color = Color.BLACK),
+        "tooltip-label" to TextStyle(FontFamily.SERIF.name, face = FontFace.NORMAL, size = 10.0, color = Color.GRAY),
+        "tooltip-text" to TextStyle(FontFamily.SERIF.name, face = FontFace.NORMAL, size = 10.0, color = Color.GRAY)
     )
 
     doc.children().add(createStyleElement(textStyles))
@@ -131,7 +131,7 @@ fun main() {
 private fun createStyleElement(textStyles: Map<String, TextStyle>): SvgStyleElement {
     return SvgStyleElement(object : SvgCssResource {
         override fun css(): String {
-            return StyleSheet(textStyles, defaultFamily = FontFamily.SERIF.toString(), defaultSize = 15.0).toCSS()
+            return StyleSheet(textStyles, defaultFamily = FontFamily.SERIF.toString()).toCSS()
         }
     })
 }

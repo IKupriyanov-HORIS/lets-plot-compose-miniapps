@@ -5,7 +5,6 @@
 
 package jetbrains.datalore.vis.svgMapper.skia
 
-import jetbrains.datalore.base.unsupported.UNSUPPORTED
 import jetbrains.datalore.vis.svg.SvgPathData.Action
 import jetbrains.datalore.vis.svg.SvgTransform
 import org.jetbrains.skia.Matrix33
@@ -70,7 +69,7 @@ internal object SvgTransformParser {
                         Matrix33.makeTranslate(dX, dY)
                     }
 
-                    SvgTransform.MATRIX -> UNSUPPORTED("We don't use MATRIX")
+                    SvgTransform.MATRIX -> error("UNSUPPORTED: We don't use MATRIX")
 
                     else -> throw IllegalArgumentException("Unknown transform: " + res.name)
                 }

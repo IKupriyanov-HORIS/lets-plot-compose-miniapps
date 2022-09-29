@@ -6,7 +6,6 @@
 package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.registration.Registration
-import jetbrains.datalore.base.unsupported.UNSUPPORTED
 import jetbrains.datalore.vis.svg.SvgElement
 import jetbrains.datalore.vis.svg.SvgTextNode
 import jetbrains.datalore.vis.svg.event.SvgEventSpec
@@ -52,6 +51,6 @@ internal class SkiaTargetPeer : TargetPeer<Element> {
     }
 
     override fun hookEventHandlers(source: SvgElement, target: Element, eventSpecs: Set<SvgEventSpec>): Registration {
-        UNSUPPORTED("hookEventHandlers")
+        error("UNSUPPORTED: hookEventHandlers")
     }
 }

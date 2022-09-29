@@ -13,17 +13,11 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                val lets_plot_version: String by project
-                val skikoVersion = extra["skiko.version"] as String
+                val lets_plot_version: String by extra
+                val skiko_version: String by extra
 
-                compileOnly("org.jetbrains.lets-plot:base:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
-
-                compileOnly("org.jetbrains.skiko:skiko:$skikoVersion")
+                compileOnly("org.jetbrains.skiko:skiko:$skiko_version")
+                compileOnly("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
             }
         }
 
