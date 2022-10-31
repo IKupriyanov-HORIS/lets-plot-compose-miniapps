@@ -15,19 +15,16 @@ class Group: Parent() {
 
     override fun doGetBounds(): Rect {
         return children.fold<Element, Rect?>(null) { acc, element ->
-            if (element.bounds.height == 0.0f && element.bounds.width == 0.0f) {
-                return Rect.makeWH(0.0f, 0.0f)
-            }
-
-            acc?.let {
+            if (acc != null) {
                 Rect.makeLTRB(
-                    min(it.left, element.bounds.left),
-                    min(it.top, element.bounds.top),
-                    max(it.right, element.bounds.right),
-                    max(it.bottom, element.bounds.bottom)
+                    min(acc.left, element.bounds.left),
+                    min(acc.top, element.bounds.top),
+                    max(acc.right, element.bounds.right),
+                    max(acc.bottom, element.bounds.bottom)
                 )
-
-            } ?: element.bounds
+            } else {
+                element.bounds
+            }
         } ?: Rect.makeWH(0.0f, 0.0f)
     }
 }

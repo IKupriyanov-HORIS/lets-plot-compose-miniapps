@@ -58,7 +58,14 @@ class Text : Figure() {
     }
 
     override fun doGetBounds(): Rect {
-        return Rect.makeXYWH(x + cx, y + cy, textLine.width, textLine.height).offset(absoluteOffsetX, absoluteOffsetY)
+        val bbox = font.measureText(text)
+        return Rect.makeLTRB(
+            bbox.left + x + cx,
+            bbox.top + y + cy,
+            bbox.right + x + cx,
+            bbox.bottom + y + cy
+        )//.offset(absoluteOffsetX, absoluteOffsetY)
+        //return Rect.makeXYWH(x + cx, y + cy, textLine.width, textLine.capHeight).offset(absoluteOffsetX, absoluteOffsetY)
     }
 
     enum class VerticalAlignment {

@@ -1,14 +1,7 @@
-/*
- * Copyright (c) 2021. JetBrains s.r.o.
- * Use of this source code is governed by the MIT license that can be found in the LICENSE file.
- */
-
 package jetbrains.datalore.vis.swing.skia
 
-import jetbrains.datalore.base.logging.PortableLogging
 import jetbrains.datalore.vis.svg.SvgSvgElement
 import jetbrains.datalore.vis.swing.PlotSpecComponentProvider
-import jetnrains.datalore.vis.swing.skia.SkiaMapperPanel
 import javax.swing.JComponent
 import javax.swing.JScrollPane
 import javax.swing.ScrollPaneConstants
@@ -27,7 +20,7 @@ open class DefaultPlotComponentProviderSkia(
 ) {
 
     /**
-     * Override when in in IDEA plugin.
+     * Override when in IDEA plugin.
      * Use: JBScrollPane
      */
     override fun createScrollPane(plotComponent: JComponent): JScrollPane {
@@ -38,9 +31,5 @@ open class DefaultPlotComponentProviderSkia(
         ).apply {
             border = null
         }
-    }
-
-    companion object {
-        private val LOG = PortableLogging.logger(DefaultPlotComponentProviderSkia::class)
     }
 }

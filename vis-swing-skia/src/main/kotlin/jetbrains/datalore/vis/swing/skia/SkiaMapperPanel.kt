@@ -1,4 +1,4 @@
-package jetnrains.datalore.vis.swing.skia
+package jetbrains.datalore.vis.swing.skia
 
 import jetbrains.datalore.base.registration.Disposable
 import jetbrains.datalore.mapper.core.MappingContext
@@ -22,14 +22,15 @@ import javax.swing.SwingUtilities
 class SkiaMapperPanel(
     private val svg: SvgSvgElement
 ) : JPanel(), Disposable {
+    @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
     private val skiaLayer = SkiaLayer()
+    private val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
 
     init {
         layout = GridLayout(0, 1, 5, 5)
         border = BorderFactory.createLineBorder(Color.ORANGE, 1)
 
-        val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
         rootMapper.attachRoot(MappingContext())
 
         skiaLayer.addView(object : SkikoView {
@@ -42,7 +43,6 @@ class SkiaMapperPanel(
             }
 
             override fun onPointerEvent(event: SkikoPointerEvent) {
-                println("onPointerEvent() - start")
                 when (event.kind) {
                     SkikoPointerEventKind.UP -> mouseListeners.forEach { it.mouseReleased(event.platform) }
                     SkikoPointerEventKind.DOWN -> mouseListeners.forEach { it.mousePressed(event.platform) }
@@ -54,7 +54,6 @@ class SkiaMapperPanel(
                     SkikoPointerEventKind.UNKNOWN -> TODO()
                 }
                 skiaLayer.needRedraw()
-                println("onPointerEvent() - end")
             }
         })
 

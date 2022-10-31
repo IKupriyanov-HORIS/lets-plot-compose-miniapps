@@ -23,6 +23,13 @@ abstract class Figure : Element() {
         if (stroke == null && strokeWidth == null && strokeDashArray == null) {
             return@dependencyProp null
         }
+
+        if (strokeWidth == 0f) {
+            // Handle zero width manually, because Skia threatens 0 as "hairline" width, i.e. 1 pixel.
+            // Source: https://api.skia.org/classSkPaint.html#af08c5bc138e981a4e39ad1f9b165c32c
+            return@dependencyProp null
+        }
+
         return@dependencyProp Paint().also { paint ->
             paint.setStroke(true)
             stroke?.let { paint.color4f = it }

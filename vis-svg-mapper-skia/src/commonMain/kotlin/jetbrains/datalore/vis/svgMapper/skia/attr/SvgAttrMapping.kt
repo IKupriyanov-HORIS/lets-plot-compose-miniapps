@@ -40,13 +40,15 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
         }
     }
 
-    companion object {
-        private fun setStyle(value: String, target: Element) {
-            println("setStyle is not implemented. style=`$value`")
+    private fun setStyle(style: String, target: TargetT) {
+        style
+            .split(";")
+            .flatMap { it.split(":") }
+            .windowed(2, 2)
+            .forEach { (attr, value) -> setAttribute(target, attr, value) }
+    }
 
-            //val valueFx = value.split(";").joinToString(";") { if (it.isNotEmpty()) "-fx-${it.trim()}" else it }
-            //target.style = valueFx
-        }
+    companion object {
 
         private fun setStyleClass(value: String?, target: Element) {
             target.styleClass = value?.split(" ")
@@ -62,11 +64,6 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
                 is String -> this.toFloat()
                 else -> error("Unsupported float value: $this")
             }
-
-        fun asDouble(value: Any?): Double {
-            if (value is Double) return value
-            return (value as String).toDouble()
-        }
 
         fun asBoolean(value: Any?): Boolean {
             return (value as? String)?.toBoolean() ?: false

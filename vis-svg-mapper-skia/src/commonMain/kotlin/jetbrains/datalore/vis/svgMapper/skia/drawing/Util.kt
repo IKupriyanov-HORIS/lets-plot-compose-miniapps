@@ -38,12 +38,11 @@ val Element.parents: List<Parent> get() {
 fun traceTree(el: Element): String {
     val buffer = StringBuilder()
 
-    val root = when {
-        el.parent == null -> el
-        else -> el.parents.lastOrNull() as? Parent
-    }
+    val root = when (el.parent) {
+        null -> el
+        else -> el.parents.lastOrNull()
+    } ?: return ""
 
-    if (root == null) return ""
     traceNode(root, 0, buffer)
 
     return buffer.toString()
@@ -57,12 +56,13 @@ fun traceNode(el: Element, indent: Int = 0, buffer: StringBuilder = StringBuilde
     return buffer
 }
 
+@Suppress("unused")
 fun traceElement(el: Element): String {
-    val elements = mutableListOf<Element>(el)
+    val elements = mutableListOf(el)
 
-    var root = when {
-        el.parent == null -> el
-        else -> el.parents.lastOrNull() as? Parent
+    var root = when (el.parent) {
+        null -> el
+        else -> el.parents.lastOrNull()
     }
 
     while (root != null) {
@@ -72,6 +72,6 @@ fun traceElement(el: Element): String {
 
     return elements
         .reversed()
-        .mapIndexed { index, el -> " ".repeat(index) + el.toString() }
+        .mapIndexed { index, it -> " ".repeat(index) + it.toString() }
         .joinToString(separator = "\n")
 }

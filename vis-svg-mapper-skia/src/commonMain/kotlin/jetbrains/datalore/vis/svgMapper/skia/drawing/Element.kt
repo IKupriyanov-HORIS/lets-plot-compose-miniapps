@@ -58,7 +58,7 @@ abstract class Element: Drawable() {
         }
 
     protected fun <T> dependencyProp(vararg deps: KProperty<*>, delegate: () -> T): DependencyProperty<T> =
-        DependencyProperty<T>(delegate).also { prop ->
+        DependencyProperty(delegate).also { prop ->
             deps.forEach {
                 propertyDeps.getOrPut(it, ::mutableListOf).add(prop)
             }
