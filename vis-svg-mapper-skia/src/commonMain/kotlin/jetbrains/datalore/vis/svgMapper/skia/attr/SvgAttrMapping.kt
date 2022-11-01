@@ -27,7 +27,7 @@ internal abstract class SvgAttrMapping<in TargetT : Element> {
             SvgTransformable.TRANSFORM.name -> setTransform((value as SvgTransform).toString(), target)
             SvgElement.ID.name -> Unit // ignore it?
 
-            else -> throw IllegalArgumentException("Unsupported attribute `$name` in ${target::class.simpleName}")
+            else -> println("Unsupported attribute `$name` in ${target::class.simpleName}")
         }
     }
 

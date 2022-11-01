@@ -29,7 +29,7 @@ internal object SvgImageAttrMapping : SvgAttrMapping<Image>() {
         return imageBytes
     }
 
-    private fun updateTargetImage(target: Image, imageBytes: ByteArray?) {
+    private fun updateTargetImage(target: Image, imageBytes: ByteArray) {
         target.img = org.jetbrains.skia.Image.makeFromEncoded(imageBytes)
     }
 }

@@ -1,4 +1,4 @@
-package me.ikupriyanov.composable
+package me.ikupriyanov.demo.composable
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
@@ -15,7 +15,8 @@ import jetbrains.datalore.vis.svgMapper.skia.SvgSvgElementMapper
 
 
 @Composable
-fun Svg(svg: SvgSvgElement, width: Double? = null, height: Double? = null, density: Double = 1.0) {
+fun Svg(svg: SvgSvgElement, width: Double? = null, height: Double? = null, density: Float = 1f) {
+    @Suppress("UNUSED_VARIABLE")
     val nodeContainer = SvgNodeContainer(svg)  // attach root
     val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
     rootMapper.attachRoot(MappingContext())
@@ -27,7 +28,7 @@ fun Svg(svg: SvgSvgElement, width: Double? = null, height: Double? = null, densi
 
     Canvas(modifier = Modifier.size(width.dp, height.dp)) {
         drawIntoCanvas { canvas ->
-            canvas.nativeCanvas.scale(density.toFloat(), density.toFloat())
+            canvas.nativeCanvas.scale(density, density)
             canvas.nativeCanvas.drawDrawable(rootMapper.target)
         }
     }
