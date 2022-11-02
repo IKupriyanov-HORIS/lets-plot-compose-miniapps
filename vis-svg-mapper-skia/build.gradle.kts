@@ -11,7 +11,7 @@ plugins {
 kotlin {
     jvm()
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             dependencies {
                 val lets_plot_version: String by extra
                 val skiko_version: String by extra

@@ -31,11 +31,13 @@ val jniDir = "${projectDir.absolutePath}/src/main/jniLibs"
 // TODO: filter .so files only.
 val unzipTaskX64 = tasks.register("unzipNativeX64", Copy::class) {
     destinationDir = file("$jniDir/x86_64")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from(skikoNativeX64.map { zipTree(it) })
 }
 
 val unzipTaskArm64 = tasks.register("unzipNativeArm64", Copy::class) {
     destinationDir = file("$jniDir/arm64-v8a")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from(skikoNativeArm64.map { zipTree(it) })
 }
 
@@ -65,6 +67,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
 }
 
 val skiko_version: String by extra
@@ -85,6 +88,10 @@ dependencies {
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
     implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
+    implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version")
 
     // error: jetbrains.datalore.vis.StyleSheet found in modules jetified-lets-plot-batik-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-batik:2.5.1-alpha1) and jetified-lets-plot-common-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-common:2.5.1-alpha1)
     // implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")

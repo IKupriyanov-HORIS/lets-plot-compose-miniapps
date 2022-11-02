@@ -36,10 +36,4 @@ subprojects {
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
-
-    plugins.withId("org.jetbrains.kotlin.multiplatform") {
-        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-        }
-    }
 }

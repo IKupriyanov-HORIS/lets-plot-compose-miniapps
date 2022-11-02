@@ -24,8 +24,8 @@ class SkiaMapperPanel(
 ) : JPanel(), Disposable {
     @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
-    private val skiaLayer = SkiaLayer()
     private val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
+    private val skiaLayer = SkiaLayer()
 
     init {
         layout = GridLayout(0, 1, 5, 5)

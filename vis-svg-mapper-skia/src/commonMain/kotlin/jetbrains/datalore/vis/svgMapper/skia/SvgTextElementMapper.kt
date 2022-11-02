@@ -71,7 +71,7 @@ internal class SvgTextElementMapper(
         if (className.isNotEmpty()) {
             val style = styleSheet.getTextStyle(className)
             target.fill = style.color.asSkiaColor
-            target.fontFamily = style.family.toString()
+            target.fontFamily = style.family.split(",").map { it.trim(' ', '"') }
             target.fontSize = style.size.toFloat()
             target.fontStyle = when  {
                 style.face.bold && !style.face.italic -> FontStyle.BOLD

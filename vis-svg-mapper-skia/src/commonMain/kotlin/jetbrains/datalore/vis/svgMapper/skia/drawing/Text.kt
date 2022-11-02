@@ -13,7 +13,7 @@ class Text : Figure() {
     var x: Float by visualProp(0.0f)
     var y: Float by visualProp(0.0f)
     var text: String by visualProp("")
-    var fontFamily: String? by visualProp(null)
+    var fontFamily: List<String> by visualProp(emptyList())
     var fontStyle: FontStyle by visualProp(FontStyle.NORMAL)
     var fontSize by visualProp(16.0f)
 
@@ -35,17 +35,16 @@ class Text : Figure() {
         }
     }
 
+    private val typeface by dependencyProp(Text::fontFamily, Text::fontStyle) {
+        FontMgr.default.matchFamiliesStyle(fontFamily.toTypedArray(), fontStyle) ?: Typeface.makeDefault()
+    }
+
     init {
         fill = Color4f(Color.BLACK)
     }
 
-    private val font by dependencyProp(Text::fontFamily, Text::fontStyle, Text::fontSize) {
-        Font(
-            fontFamily
-                ?.let { Typeface.makeFromName(it, fontStyle) }
-                ?: run { Typeface.makeDefault() },
-            fontSize
-        )
+    private val font by dependencyProp(Text::typeface, Text::fontSize) {
+        Font(typeface, fontSize)
     }
 
     private val textLine by dependencyProp(Text::text, Text::font) {
