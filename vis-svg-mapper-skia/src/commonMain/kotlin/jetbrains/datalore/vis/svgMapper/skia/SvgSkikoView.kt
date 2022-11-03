@@ -11,14 +11,10 @@ import jetbrains.datalore.vis.svg.SvgSvgElement
 import org.jetbrains.skia.Canvas
 import org.jetbrains.skiko.*
 
-// FIXME: There is no skiko-common library and project compiled against skiko-jvm dep.
-//  Because of this we CAN'T instantiate any skiko classes (SkiaLayer, SkikoPointerEvent, etc)
-//  in this module - all these class will be bound to AWT and will fail at runtime on Android.
 class SvgSkikoLayer(
     private val svg: SvgSvgElement,
     val skiaLayer: SkiaLayer
 ) {
-
     @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
     private val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
@@ -29,35 +25,23 @@ class SvgSkikoLayer(
 
         skiaLayer.skikoView = object : SkikoView {
             override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
-                val contentScale = skiaLayer.contentScale
                 canvas.scale(skiaLayer.contentScale, skiaLayer.contentScale)
                 canvas.drawDrawable(rootMapper.target)
             }
 
-            override fun onKeyboardEvent(event: SkikoKeyboardEvent) {
-                //println("onKeyboardEvent() - $event")
-                skiaLayer.needRedraw()
-            }
-
             override fun onGestureEvent(event: SkikoGestureEvent) {
-                //println("onGestureEvent() - ${event.kind}, ${event.state}")
                 when (event.kind) {
-                    SkikoGestureEventKind.LONGPRESS -> mouseEventHandler(MouseEventSpec.MOUSE_LEFT, MouseEvent(event.x.toInt(), event.y.toInt(), Button.NONE, emptyModifiers()))
-                    SkikoGestureEventKind.PAN -> mouseEventHandler(MouseEventSpec.MOUSE_MOVED, MouseEvent(event.x.toInt(), event.y.toInt(), Button.NONE, emptyModifiers()))
-                    SkikoGestureEventKind.TAP -> mouseEventHandler(MouseEventSpec.MOUSE_MOVED, MouseEvent(event.x.toInt(), event.y.toInt(), Button.NONE, emptyModifiers()))
-                    else -> Unit
+                    SkikoGestureEventKind.LONGPRESS -> MouseEventSpec.MOUSE_LEFT
+                    SkikoGestureEventKind.PAN -> MouseEventSpec.MOUSE_MOVED
+                    SkikoGestureEventKind.TAP -> MouseEventSpec.MOUSE_MOVED
+                    else -> null
+                }?.let {
+                    mouseEventHandler(it, event.toMouseEvent())
+                    skiaLayer.needRedraw()
                 }
-                skiaLayer.needRedraw()
-            }
-
-            override fun onTouchEvent(events: Array<SkikoTouchEvent>) {
-                //println("onTouchEvent() - events:\n${events.joinToString(separator = "\n") { it.kind.toString() }}")
-                skiaLayer.needRedraw()
             }
 
             override fun onPointerEvent(event: SkikoPointerEvent) {
-                //println("onPointerEvent() - $event")
-
                 when (event.kind) {
                     SkikoPointerEventKind.UP -> MouseEventSpec.MOUSE_RELEASED
                     SkikoPointerEventKind.DOWN -> MouseEventSpec.MOUSE_PRESSED
@@ -86,6 +70,15 @@ class SvgSkikoLayer(
 
 fun skikoSvgLayer(svg: SvgSvgElement, skiaLayer: SkiaLayer): SvgSkikoLayer {
     return SvgSkikoLayer(svg, skiaLayer)
+}
+
+private fun SkikoGestureEvent.toMouseEvent(): MouseEvent {
+    return MouseEvent(
+        x = x.toInt(),
+        y = y.toInt(),
+        button = Button.NONE,
+        modifiers = emptyModifiers()
+    )
 }
 
 private fun SkikoPointerEvent.toMouseEvent(): MouseEvent {

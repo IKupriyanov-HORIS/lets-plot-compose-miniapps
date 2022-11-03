@@ -4,6 +4,12 @@ import kotlin.test.assertEquals
 
 class Base64Test {
 
+    private fun String.toByteArray(): ByteArray {
+        val array = ByteArray(length)
+        forEachIndexed { i, char -> array[i] = char.code.toByte() }
+        return array
+    }
+
     @Test
     fun emptyBuffer() {
         val str = ""
