@@ -12,15 +12,15 @@ import jetbrains.datalore.vis.svgToString.SvgToString
 import org.jetbrains.skiko.*
 
 
-object Plot {
+object MonolithicSkia {
     fun buildPlotFromRawSpecs(
         plotSpec: MutableMap<String, Any>,
         plotSize: DoubleVector?,
         plotMaxWidth: Double?,
-        svgComponentFactory: (svg: SvgSvgElement) -> SvgSkikoLayer,
+        svgComponentFactory: (svg: SvgSvgElement) -> SkiaWidget,
         executor: (() -> Unit) -> Unit,
         computationMessagesHandler: ((List<String>) -> Unit)
-    ): SvgSkikoLayer {
+    ): SkiaWidget {
         return try {
             @Suppress("NAME_SHADOWING")
             val plotSpec = processSpecs(plotSpec, frontendOnly = false)
@@ -67,10 +67,10 @@ object Plot {
         plotSpec: MutableMap<String, Any>,
         plotSize: DoubleVector?,
         plotMaxWidth: Double?,
-        svgComponentFactory: (svg: SvgSvgElement) -> SvgSkikoLayer,
+        svgComponentFactory: (svg: SvgSvgElement) -> SkiaWidget,
         executor: (() -> Unit) -> Unit,
         computationMessagesHandler: ((List<String>) -> Unit)
-    ): SvgSkikoLayer {
+    ): SkiaWidget {
         return try {
             val buildResult = MonolithicCommon.buildPlotsFromProcessedSpecs(
                 plotSpec,
@@ -106,9 +106,9 @@ object Plot {
 
     private fun buildPlotComponent(
         plotBuildInfo: MonolithicCommon.PlotBuildInfo,
-        svgComponentFactory: (svg: SvgSvgElement) -> SvgSkikoLayer,
+        svgComponentFactory: (svg: SvgSvgElement) -> SkiaWidget,
         executor: (() -> Unit) -> Unit
-    ): SvgSkikoLayer {
+    ): SkiaWidget {
         val assembler = plotBuildInfo.plotAssembler
 
         if (assembler.containsLiveMap) {
@@ -130,14 +130,12 @@ object Plot {
 
     fun buildPlotComponent(
         plotContainer: PlotContainer,
-        svgComponentFactory: (svg: SvgSvgElement) -> SvgSkikoLayer,
+        svgComponentFactory: (svg: SvgSvgElement) -> SkiaWidget,
         executor: (() -> Unit) -> Unit
-    ): SvgSkikoLayer {
+    ): SkiaWidget {
         plotContainer.ensureContentBuilt()
         val svg = plotContainer.svg
-
-
-        val plotComponent: SvgSkikoLayer = svgComponentFactory(svg)
+        val plotComponent: SkiaWidget = svgComponentFactory(svg)
 
         plotComponent.setMouseEventListener { s, e ->
             executor {
@@ -145,81 +143,14 @@ object Plot {
             }
         }
 
-//        plotComponent.addMouseMotionListener(object : MouseAdapter() {
-//            override fun mouseMoved(e: MouseEvent) {
-//                super.mouseMoved(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_MOVED, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//
-//            override fun mouseDragged(e: MouseEvent) {
-//                super.mouseDragged(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_DRAGGED, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//
-//        })
-//
-//        plotComponent.addMouseListener(object : MouseAdapter() {
-//            override fun mouseExited(e: MouseEvent) {
-//                super.mouseExited(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_LEFT, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//
-//            override fun mouseClicked(e: MouseEvent) {
-//                super.mouseClicked(e)
-//                val event = if (e.clickCount % 2 == 1) {
-//                    MouseEventSpec.MOUSE_CLICKED
-//                } else {
-//                    MouseEventSpec.MOUSE_DOUBLE_CLICKED
-//                }
-//
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(event, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//
-//            override fun mousePressed(e: MouseEvent) {
-//                super.mousePressed(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_PRESSED, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//
-//            override fun mouseReleased(e: MouseEvent) {
-//                super.mouseReleased(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_RELEASED, AwtEventUtil.translate(e))
-//                }
-//            }
-//
-//            override fun mouseEntered(e: MouseEvent) {
-//                super.mouseEntered(e)
-//                executor {
-//                    plotContainer.mouseEventPeer.dispatch(MouseEventSpec.MOUSE_ENTERED, AwtEventUtil.translate(e))
-//                }
-//            }
-//        })
-
-
         return plotComponent
     }
 
-
     private fun buildGGBunchComponent(
         plotInfos: List<MonolithicCommon.PlotBuildInfo>,
-        svgComponentFactory: (svg: SvgSvgElement) -> SvgSkikoLayer,
+        svgComponentFactory: (svg: SvgSvgElement) -> SkiaWidget,
         executor: (() -> Unit) -> Unit
-    ): SvgSkikoLayer {
+    ): SkiaWidget {
 /*
         val bunchComponent = DisposableJPanel(null)
 
@@ -269,7 +200,7 @@ object Plot {
     }
 
 
-    private fun handleException(e: RuntimeException): SvgSkikoLayer {
+    private fun handleException(e: RuntimeException): SkiaWidget {
         //val failureInfo = FailureHandler.failureInfo(e)
         //if (failureInfo.isInternalError) {
         //    LOG.error(e) {}
@@ -279,7 +210,7 @@ object Plot {
         error("handleException(e)")
     }
 
-    private fun createErrorLabel(s: String): SvgSkikoLayer {
+    private fun createErrorLabel(s: String): SkiaWidget {
         //val label = JLabel(s)
         //label.foreground = Color.RED
         //return label

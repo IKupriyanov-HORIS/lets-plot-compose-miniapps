@@ -16,7 +16,7 @@ class SvgViewerDemoWindowSkia(
     maxCol = maxCol,
 ) {
     override fun createPlotComponent(svgRoot: SvgSvgElement): JComponent {
-        val component = SkiaMapperPanel(svgRoot)
+        val component = SkiaMapperComponent(svgRoot)
         component.border = BorderFactory.createLineBorder(Color.ORANGE, 1)
         return component
     }

@@ -14,7 +14,7 @@ open class DefaultPlotComponentProviderSkia(
 ) : PlotSpecComponentProvider(
     processedSpec = processedSpec,
     preserveAspectRatio = preserveAspectRatio,
-    svgComponentFactory = { svg: SvgSvgElement -> SkiaMapperPanel(svg) },
+    svgComponentFactory = { svg: SvgSvgElement -> SkiaMapperComponent(svg) },
     executor = executor,
     computationMessagesHandler = computationMessagesHandler
 ) {

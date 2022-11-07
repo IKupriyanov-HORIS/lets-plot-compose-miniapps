@@ -2,17 +2,14 @@ package me.ikupriyanov.letsPlot.android.demo
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import jetbrains.datalore.base.geometry.DoubleVector
 import jetbrains.datalore.plotDemo.model.plotConfig.Area
-import jetbrains.datalore.vis.svg.SvgElement
-import jetbrains.datalore.vis.svg.SvgSvgElement
-import jetbrains.datalore.vis.svgMapper.skia.Plot
-import jetbrains.datalore.vis.svgMapper.skia.skikoSvgLayer
-import me.ikupriyanov.letsPlot.android.skia.SkiaMapperLayer
-import org.jetbrains.skiko.SkiaLayer
-import org.jetbrains.skiko.SkikoGestureEventKind
+import jetbrains.datalore.vis.svgMapper.skia.MonolithicSkia
+import me.ikupriyanov.letsPlot.android.demo.SkikoAndroidUtil.svgView
+import me.ikupriyanov.letsPlot.android.demo.SkikoAndroidUtil.wrap
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,51 +17,27 @@ class MainActivity : Activity() {
 
         val layout = LinearLayout(this)
         layout.orientation = LinearLayout.VERTICAL
-        layout.layoutParams =
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        setContentView(layout, layout.layoutParams)
+        layout.layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-        //layout.addView(addSvg("Demo A", DemoModelA.createModel()))
+        val scrollView = ScrollView(this)
+        scrollView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT)
+        scrollView.addView(layout)
+        setContentView(scrollView, layout.layoutParams)
+
+        //layout.addView(wrap(svgView(DemoModelA.createModel())))
         //layout.addView(addSvg("Demo B", DemoModelB.createModel()))
         //layout.addView(addSvg("Demo C", DemoModelC.createModel()))
 
         with(Area()) {
-            val skikoLayer = Plot.buildPlotFromRawSpecs(
+            val plotView = MonolithicSkia.buildPlotFromRawSpecs(
                 plotSpecList().first(),
-                DoubleVector(600.0, 300.0),
+                DoubleVector(400.0, 300.0),
                 null,
-                { svg -> skikoSvgLayer(svg, SkiaLayer().apply {
-                    gesturesToListen = arrayOf(SkikoGestureEventKind.PAN, SkikoGestureEventKind.DOUBLETAP, SkikoGestureEventKind.TAP, SkikoGestureEventKind.LONGPRESS)
-                }) },
-                { function -> function() },
-                { strings -> strings.joinToString().also { print(it) } }
+                ::svgView,
+                { it.invoke() },
+                { strings -> strings.joinToString().also(::println) }
             )
-            skikoLayer.skiaLayer
-
-            layout.addView(addSkia("area", skikoLayer.skiaLayer))
+            layout.addView(wrap(plotView))
         }
-    }
-
-    private fun addSvg(title: String, svg: SvgElement): LinearLayout {
-        return addSkia(
-            title,
-            SkiaMapperLayer(
-                SvgSvgElement(500.0, 500.0).apply {
-                    children().add(svg)
-                }
-            )
-        )
-    }
-
-    private fun addSkia(title: String, layer: SkiaLayer): LinearLayout {
-        val svgContainer = LinearLayout(this)
-        svgContainer.orientation = LinearLayout.VERTICAL
-        svgContainer.layoutParams = LinearLayout.LayoutParams(1800, 900)
-        //svgContainer.addView(TextView(this).apply {
-        //    text = title
-        //})
-
-        layer.attachTo(svgContainer)
-        return svgContainer
     }
 }
