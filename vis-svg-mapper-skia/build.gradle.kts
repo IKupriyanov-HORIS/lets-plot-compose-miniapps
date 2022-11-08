@@ -4,8 +4,8 @@
  */
 
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
-    id("maven-publish")
+    kotlin("multiplatform")
+//    id("com.android.library")
 }
 
 val lets_plot_version: String by extra
@@ -19,6 +19,8 @@ kotlin {
         browser()
         binaries.executable()
     }
+
+//    android()
 
     sourceSets {
         val commonMain by getting {
@@ -54,3 +56,11 @@ kotlin {
         }
     }
 }
+
+//android {
+//    compileSdk = 32
+//    defaultConfig {
+//        minSdk = 21
+//        targetSdk = 32
+//    }
+//}

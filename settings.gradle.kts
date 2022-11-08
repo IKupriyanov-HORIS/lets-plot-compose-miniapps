@@ -12,10 +12,10 @@ pluginManagement {
         val agp_version: String by extra
 
         kotlin("jvm").version(kotlin_version)
-        kotlin("android").version(kotlin_version)
-        id("org.jetbrains.compose").version(compose_version)
-        id("com.android.base").version(agp_version)
-        id("com.android.application").version(agp_version)
+        kotlin("android").version(kotlin_version).apply(false)
+        id("org.jetbrains.compose").version(compose_version).apply(false)
+        id("com.android.base").version(agp_version).apply(false)
+        id("com.android.application").version(agp_version).apply (false)
     }
 }
 
