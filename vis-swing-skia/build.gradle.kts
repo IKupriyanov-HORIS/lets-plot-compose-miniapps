@@ -30,6 +30,7 @@ val host = "${hostOs}-${hostArch}"
 
 dependencies {
     implementation("org.jetbrains.skiko:skiko:$skiko_version")
+    implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
     implementation(project(":vis-svg-mapper-skia"))
     implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
 }
