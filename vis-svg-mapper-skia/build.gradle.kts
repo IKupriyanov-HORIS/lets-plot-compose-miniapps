@@ -36,16 +36,18 @@ kotlin {
                  */
                 //compileOnly("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
 
-                compileOnly("org.jetbrains.lets-plot:base-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:base:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:mapper-core:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:vis-canvas:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:plot-builder:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version")
-                compileOnly("org.jetbrains.lets-plot:plot-config:$lets_plot_version")
+                compileOnly("org.jetbrains.lets-plot:base-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:base:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:vis-canvas:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-common-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-base-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version") { isTransitive = false }
+                compileOnly("org.jetbrains.lets-plot:plot-config:$lets_plot_version") { isTransitive = false }
             }
         }
 
@@ -63,10 +65,15 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-
+                implementation("io.github.microutils:kotlin-logging-jvm:2.0.5") // TODO remove with other { isTransitive = false }
             }
         }
 
+        val jsMain by getting {
+            dependencies {
+                implementation("io.github.microutils:kotlin-logging-js:2.0.5") // TODO remove with other { isTransitive = false }
+            }
+        }
     }
 }
 
