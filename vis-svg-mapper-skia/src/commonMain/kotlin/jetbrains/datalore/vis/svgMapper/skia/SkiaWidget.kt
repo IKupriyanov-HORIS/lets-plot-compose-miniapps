@@ -8,6 +8,8 @@ import jetbrains.datalore.base.event.MouseEventSpec
 import jetbrains.datalore.mapper.core.MappingContext
 import jetbrains.datalore.vis.svg.SvgNodeContainer
 import jetbrains.datalore.vis.svg.SvgSvgElement
+import jetbrains.datalore.vis.svgMapper.skia.mapper.SvgSkiaPeer
+import jetbrains.datalore.vis.svgMapper.skia.mapper.SvgSvgElementMapper
 import org.jetbrains.skia.Canvas
 import org.jetbrains.skiko.*
 
@@ -19,7 +21,7 @@ class SkiaWidget(
     @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
     private val rootMapper = SvgSvgElementMapper(svg, SvgSkiaPeer())
-    private var mouseEventHandler: (MouseEventSpec, MouseEvent) -> Unit = EMPTY_MOUSE_EVENT_HANDLER()
+    private var mouseEventHandler: (MouseEventSpec, MouseEvent) -> Unit = EMPTY_MOUSE_EVENT_HANDLER
 
     val skikoView = object : SkikoView {
         override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
@@ -70,7 +72,7 @@ class SkiaWidget(
 
 }
 
-fun EMPTY_MOUSE_EVENT_HANDLER(): (MouseEventSpec, MouseEvent) -> Unit = { _, _ -> }
+val EMPTY_MOUSE_EVENT_HANDLER: (MouseEventSpec, MouseEvent) -> Unit = { _, _ -> }
 
 private fun SkikoGestureEvent.toMouseEvent(): MouseEvent {
     return MouseEvent(

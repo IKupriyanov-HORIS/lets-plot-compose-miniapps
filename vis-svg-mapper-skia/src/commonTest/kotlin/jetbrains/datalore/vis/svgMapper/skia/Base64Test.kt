@@ -1,4 +1,5 @@
 package jetbrains.datalore.vis.svgMapper.skia
+import jetbrains.datalore.vis.svgMapper.skia.mapper.Base64
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -80,6 +81,12 @@ class Base64Test {
         assertEquals(byteArray(0, 0), Base64.decode("AAA="))
         assertEquals(byteArray(0, 0, 0), Base64.decode("AAAA"))
         assertEquals(byteArray(0xff, 0xef), Base64.decode("/+8="))
+    }
+
+    @Test
+    fun skipNonBase64Symbols() {
+        val str = "Zm9v\nYmFy"
+        assertEquals("foobar".toByteArray(), Base64.decode(str))
     }
 
     private fun byteArray(vararg a : Int): ByteArray = a.toList().map { it.toByte() }.toByteArray()

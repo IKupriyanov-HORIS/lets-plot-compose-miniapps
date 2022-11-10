@@ -5,7 +5,7 @@
 
 plugins {
     kotlin("multiplatform")
-//    id("com.android.library")
+    id("com.android.library")
 }
 
 val lets_plot_version: String by extra
@@ -20,7 +20,7 @@ kotlin {
         binaries.executable()
     }
 
-//    android()
+    android()
 
     sourceSets {
         val commonMain by getting {
@@ -54,13 +54,27 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+
+        val androidMain by getting {
+            dependencies {
+                implementation("org.jetbrains.skiko:skiko-android:$skiko_version")
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+
+            }
+        }
+
     }
 }
 
-//android {
-//    compileSdk = 32
-//    defaultConfig {
-//        minSdk = 21
-//        targetSdk = 32
-//    }
-//}
+android {
+    compileSdk = 31
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 31
+    }
+}
