@@ -27,14 +27,17 @@ val host = "${hostOs}-${hostArch}"
 dependencies {
     implementation("org.jetbrains.skiko:skiko:$skiko_version")
     implementation(project(":vis-svg-mapper-skia"))
-    implementation(project(":vis-swing-skia"))
 
     implementation("org.jetbrains.skiko:skiko-awt-runtime-$hostOs-$hostArch:$skiko_version")
+    implementation("org.jetbrains.lets-plot:base:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-base-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:plot-config:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:plot-common-portable:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version") { isTransitive = false }
 }

@@ -1,4 +1,4 @@
-package jetbrains.datalore.vis.swing.skia
+package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.event.MouseEventSpec
 import jetbrains.datalore.base.registration.Disposable

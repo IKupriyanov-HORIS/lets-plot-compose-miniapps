@@ -1,7 +1,7 @@
 package me.ikupriyanov.demo.plot
 
 import jetbrains.datalore.plot.MonolithicCommon
-import jetbrains.datalore.vis.swing.skia.DefaultPlotPanelSkia
+import jetbrains.datalore.vis.svgMapper.skia.DefaultPlotPanelSkia
 
 
 fun rawPlotPanel(rawSpec: MutableMap<String, Any>): DefaultPlotPanelSkia {

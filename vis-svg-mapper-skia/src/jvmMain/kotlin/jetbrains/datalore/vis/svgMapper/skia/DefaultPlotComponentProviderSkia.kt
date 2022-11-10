@@ -1,4 +1,4 @@
-package jetbrains.datalore.vis.swing.skia
+package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.vis.svg.SvgSvgElement
 import jetbrains.datalore.vis.swing.PlotSpecComponentProvider

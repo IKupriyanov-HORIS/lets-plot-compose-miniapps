@@ -1,10 +1,9 @@
-package jetbrains.datalore.vis.swing.skia
+package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.event.Button
 import jetbrains.datalore.base.event.MouseEvent
 import jetbrains.datalore.base.event.MouseEventSpec
 import jetbrains.datalore.vis.svg.SvgSvgElement
-import jetbrains.datalore.vis.svgMapper.skia.SkiaWidget
 import org.jetbrains.skiko.SkiaLayer
 import java.awt.Component
 import java.time.Instant

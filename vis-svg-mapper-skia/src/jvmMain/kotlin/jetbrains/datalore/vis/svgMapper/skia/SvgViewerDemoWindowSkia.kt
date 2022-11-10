@@ -1,4 +1,4 @@
-package jetbrains.datalore.vis.swing.skia
+package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.vis.demoUtils.swing.SvgViewerDemoWindowBase
 import jetbrains.datalore.vis.svg.SvgSvgElement

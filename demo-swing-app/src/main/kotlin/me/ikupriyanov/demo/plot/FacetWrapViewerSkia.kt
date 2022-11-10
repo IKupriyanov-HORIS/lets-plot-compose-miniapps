@@ -1,7 +1,7 @@
 package me.ikupriyanov.demo.plot
 
 import jetbrains.datalore.plotDemo.model.plotConfig.FacetWrapDemo
-import jetbrains.datalore.vis.swing.skia.PlotViewerWindowSkia
+import jetbrains.datalore.vis.svgMapper.skia.PlotViewerWindowSkia
 
 object FacetWrapViewerSkia {
     @JvmStatic

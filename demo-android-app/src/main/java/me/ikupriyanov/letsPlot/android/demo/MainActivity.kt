@@ -8,8 +8,8 @@ import android.widget.ScrollView
 import jetbrains.datalore.base.geometry.DoubleVector
 import jetbrains.datalore.plotDemo.model.plotConfig.Area
 import jetbrains.datalore.vis.svgMapper.skia.MonolithicSkia
-import me.ikupriyanov.letsPlot.android.demo.SkikoAndroidUtil.svgView
-import me.ikupriyanov.letsPlot.android.demo.SkikoAndroidUtil.wrap
+import jetbrains.datalore.vis.svgMapper.skia.SkikoAndroidUtil.svgView
+import jetbrains.datalore.vis.svgMapper.skia.SkikoAndroidUtil.wrap
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {

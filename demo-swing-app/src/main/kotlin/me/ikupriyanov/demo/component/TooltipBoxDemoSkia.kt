@@ -5,7 +5,7 @@
 
 package me.ikupriyanov.demo.component
 
-import jetbrains.datalore.vis.swing.skia.SvgViewerDemoWindowSkia
+import jetbrains.datalore.vis.svgMapper.skia.SvgViewerDemoWindowSkia
 import java.awt.EventQueue.invokeLater
 
 fun main() {

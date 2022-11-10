@@ -88,10 +88,13 @@ dependencies {
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:plot-base-portable:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:plot-common-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version") { isTransitive = false }
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.5") // TODO remove with other { isTransitive = false }
 
     // error: jetbrains.datalore.vis.StyleSheet found in modules jetified-lets-plot-batik-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-batik:2.5.1-alpha1) and jetified-lets-plot-common-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-common:2.5.1-alpha1)
     // implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")

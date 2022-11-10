@@ -1,9 +1,8 @@
-package me.ikupriyanov.letsPlot.android.demo
+package jetbrains.datalore.vis.svgMapper.skia
 
 import android.content.Context
 import android.widget.LinearLayout
 import jetbrains.datalore.vis.svg.SvgSvgElement
-import jetbrains.datalore.vis.svgMapper.skia.SkiaWidget
 import org.jetbrains.skiko.SkiaLayer
 import org.jetbrains.skiko.SkikoGestureEventKind.*
 
