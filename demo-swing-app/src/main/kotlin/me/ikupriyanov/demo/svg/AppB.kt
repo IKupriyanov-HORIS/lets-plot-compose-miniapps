@@ -1,8 +1,8 @@
 package me.ikupriyanov.demo.svg
 
 import jetbrains.datalore.vis.svgMapper.demo.DemoModelB
-import jetbrains.datalore.vis.svgMapper.skia.SvgViewerDemoWindowSkia
+import me.ikupriyanov.demo.utils.SvgWindowSkia
 
 fun main() {
-    SvgViewerDemoWindowSkia("SwingSkia DemoB", listOf(DemoModelB.createModel()))
+    SvgWindowSkia("SwingSkia DemoB", listOf(DemoModelB.createModel()))
 }

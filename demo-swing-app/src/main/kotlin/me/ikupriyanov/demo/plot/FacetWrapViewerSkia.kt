@@ -1,19 +1,14 @@
 package me.ikupriyanov.demo.plot
 
 import jetbrains.datalore.plotDemo.model.plotConfig.FacetWrapDemo
-import jetbrains.datalore.vis.svgMapper.skia.PlotViewerWindowSkia
+import me.ikupriyanov.demo.utils.PlotWindowSkia
 
 object FacetWrapViewerSkia {
     @JvmStatic
     fun main(args: Array<String>) {
-        with(FacetWrapDemo()) {
-            PlotViewerWindowSkia(
-                "Facet wrap (Skia)",
-                null,
-                plotSpecList().first(),
-//                    Dimension(900, 700),
-                preserveAspectRatio = false
-            ).open()
-        }
+        PlotWindowSkia(
+            "Facet wrap (Skia)",
+            FacetWrapDemo().plotSpecList(),
+        ).open()
     }
 }

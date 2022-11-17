@@ -33,11 +33,12 @@ dependencies {
     implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-base-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:vis-svg-portable:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:vis-svg-mapper:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-config:$lets_plot_version") { isTransitive = false }
+    implementation("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-common-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") { isTransitive = false }
-    implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version") { isTransitive = false }
 }

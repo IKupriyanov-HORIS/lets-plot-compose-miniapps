@@ -1,14 +1,14 @@
 package me.ikupriyanov.demo.plot
 
-import jetbrains.datalore.plotDemo.model.plotConfig.Area
+import jetbrains.datalore.plotDemo.model.plotConfig.Raster
 import me.ikupriyanov.demo.utils.PlotWindowSkia
 
-object AreaViewerSkia {
+object RasterViewerSkia {
     @JvmStatic
     fun main(args: Array<String>) {
         PlotWindowSkia(
-            "Area plot",
-            Area().plotSpecList(),
+            "geom_raster",
+            Raster().plotSpecList(),
         ).open()
     }
 }

@@ -1,14 +1,14 @@
 package me.ikupriyanov.demo.plot
 
-import jetbrains.datalore.plotDemo.model.plotConfig.Area
+import jetbrains.datalore.plotDemo.model.plotConfig.Violin
 import me.ikupriyanov.demo.utils.PlotWindowSkia
 
-object AreaViewerSkia {
+object ViolinViewerSkia {
     @JvmStatic
     fun main(args: Array<String>) {
         PlotWindowSkia(
-            "Area plot",
-            Area().plotSpecList(),
+            "Violin plot",
+            Violin().plotSpecList(),
         ).open()
     }
 }

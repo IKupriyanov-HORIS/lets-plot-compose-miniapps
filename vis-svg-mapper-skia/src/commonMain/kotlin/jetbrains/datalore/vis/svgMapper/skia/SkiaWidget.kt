@@ -13,10 +13,12 @@ import jetbrains.datalore.vis.svgMapper.skia.mapper.SvgSvgElementMapper
 import org.jetbrains.skia.Canvas
 import org.jetbrains.skiko.*
 
-class SkiaWidget(
+internal class SkiaWidget(
     private val svg: SvgSvgElement,
     val nativeLayer: SkiaLayer,
-    initialize: (SkiaLayer, SkikoView) -> Unit // FIXME: https://github.com/JetBrains/skiko/issues/614
+    val x: Double = 0.0,
+    val y: Double = 0.0,
+    initialize: (SkiaLayer, SkikoView) -> Unit = { _, _ -> }// FIXME: https://github.com/JetBrains/skiko/issues/614
 ) {
     @Suppress("unused")
     private val nodeContainer = SvgNodeContainer(svg)  // attach root
@@ -30,7 +32,6 @@ class SkiaWidget(
         }
 
         override fun onGestureEvent(event: SkikoGestureEvent) {
-            println(input)
             when (event.kind) {
                 SkikoGestureEventKind.LONGPRESS -> MouseEventSpec.MOUSE_LEFT
                 SkikoGestureEventKind.PAN -> MouseEventSpec.MOUSE_MOVED
@@ -69,7 +70,6 @@ class SkiaWidget(
 
     fun width() = (svg.width().get() ?: 0.0)
     fun height() = (svg.height().get() ?: 0.0)
-
 }
 
 val EMPTY_MOUSE_EVENT_HANDLER: (MouseEventSpec, MouseEvent) -> Unit = { _, _ -> }

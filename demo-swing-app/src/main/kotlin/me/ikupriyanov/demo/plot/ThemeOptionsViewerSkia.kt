@@ -1,19 +1,14 @@
 package me.ikupriyanov.demo.plot
 
 import jetbrains.datalore.plotDemo.model.plotConfig.ThemeOptions
-import jetbrains.datalore.vis.svgMapper.skia.PlotViewerWindowSkia
+import me.ikupriyanov.demo.utils.PlotWindowSkia
 
 object ThemeOptionsViewerSkia {
     @JvmStatic
     fun main(args: Array<String>) {
-        with(ThemeOptions()) {
-            PlotViewerWindowSkia(
-                "Theme options",
-                null,
-                plotSpecList().first(),
-//                    Dimension(900, 700),
-                preserveAspectRatio = false
-            ).open()
-        }
+        PlotWindowSkia(
+            "Theme options",
+            ThemeOptions().plotSpecList(),
+        ).open()
     }
 }

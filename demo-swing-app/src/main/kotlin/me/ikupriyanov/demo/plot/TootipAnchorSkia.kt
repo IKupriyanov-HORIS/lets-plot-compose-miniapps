@@ -1,14 +1,11 @@
 package me.ikupriyanov.demo.plot
 
 import jetbrains.datalore.plotDemo.model.plotConfig.TooltipAnchor
-import jetbrains.datalore.vis.svgMapper.skia.PlotViewerWindowSkia
+import me.ikupriyanov.demo.utils.PlotWindowSkia
 
 fun main() {
-    with(TooltipAnchor()) {
-        PlotViewerWindowSkia(
-            "Tooltip Anchor",
-            null,
-            plotSpecList().first()
-        ).open()
-    }
+    PlotWindowSkia(
+        "Tooltip Anchor",
+        TooltipAnchor().plotSpecList()
+    ).open()
 }
