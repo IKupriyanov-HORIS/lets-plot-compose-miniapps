@@ -1,4 +1,4 @@
-
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 buildscript {
     repositories {
@@ -31,13 +31,13 @@ val jniDir = "${projectDir.absolutePath}/src/main/jniLibs"
 // TODO: filter .so files only.
 val unzipTaskX64 = tasks.register("unzipNativeX64", Copy::class) {
     destinationDir = file("$jniDir/x86_64")
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // TODO: fremove when filter by .so will start to work
     from(skikoNativeX64.map { zipTree(it) })
 }
 
 val unzipTaskArm64 = tasks.register("unzipNativeArm64", Copy::class) {
     destinationDir = file("$jniDir/arm64-v8a")
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // TODO: fremove when filter by .so will start to work
     from(skikoNativeArm64.map { zipTree(it) })
 }
 
@@ -95,12 +95,9 @@ dependencies {
     implementation("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:plot-demo-common:$lets_plot_version") { isTransitive = false }
     implementation("io.github.microutils:kotlin-logging-jvm:2.0.5") // TODO remove with other { isTransitive = false }
-
-    // error: jetbrains.datalore.vis.StyleSheet found in modules jetified-lets-plot-batik-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-batik:2.5.1-alpha1) and jetified-lets-plot-common-2.5.1-alpha1 (org.jetbrains.lets-plot:lets-plot-common:2.5.1-alpha1)
-    // implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile>().configureEach {
+tasks.withType<KotlinJvmCompile>().configureEach {
     dependsOn(unzipTaskX64)
     dependsOn(unzipTaskArm64)
 }

@@ -38,7 +38,6 @@ kotlin {
                 compileOnly("org.jetbrains.lets-plot:plot-builder-portable:$lets_plot_version") { isTransitive = false }
                 compileOnly("org.jetbrains.lets-plot:plot-builder:$lets_plot_version") { isTransitive = false }
                 compileOnly("org.jetbrains.lets-plot:plot-config-portable:$lets_plot_version") { isTransitive = false }
-                compileOnly("org.jetbrains.lets-plot:plot-config:$lets_plot_version") { isTransitive = false }
             }
         }
 

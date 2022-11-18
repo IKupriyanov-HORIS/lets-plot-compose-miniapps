@@ -16,17 +16,17 @@ object MonolithicSkia {
         plotMaxWidth: Double?,
         computationMessagesHandler: ((List<String>) -> Unit)
     ): Result<List<MonolithicCommon.PlotBuildInfo>> {
-        return try {
+        try {
             @Suppress("NAME_SHADOWING")
             val plotSpec = processSpecs(plotSpec, frontendOnly = false)
-            buildPlotFromProcessedSpecs(
+            return buildPlotFromProcessedSpecs(
                 plotSpec,
                 plotSize,
                 plotMaxWidth,
                 computationMessagesHandler
             )
         } catch (e: RuntimeException) {
-            Result.failure(e)
+            return Result.failure(e)
         }
     }
 
@@ -36,7 +36,7 @@ object MonolithicSkia {
         plotMaxWidth: Double?,
         computationMessagesHandler: ((List<String>) -> Unit)
     ): Result<List<MonolithicCommon.PlotBuildInfo>> {
-        return try {
+        try {
             val buildResult = MonolithicCommon.buildPlotsFromProcessedSpecs(
                 plotSpec,
                 plotSize,
