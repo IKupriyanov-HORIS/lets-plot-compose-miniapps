@@ -27,6 +27,7 @@ allprojects {
                 url = uri(it)
             }
         }
+        mavenLocal()
     }
 }
 
