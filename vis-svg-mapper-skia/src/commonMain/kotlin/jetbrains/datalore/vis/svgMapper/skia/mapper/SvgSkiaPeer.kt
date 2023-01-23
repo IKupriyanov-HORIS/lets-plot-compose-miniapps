@@ -15,7 +15,7 @@ import jetbrains.datalore.vis.svg.SvgPlatformPeer
 import jetbrains.datalore.vis.svg.SvgTextContent
 import jetbrains.datalore.vis.svgMapper.skia.mapper.drawing.Element
 
-internal class SvgSkiaPeer : SvgPlatformPeer {
+class SvgSkiaPeer : SvgPlatformPeer {
     private val myMappingMap = HashMap<SvgNode, Mapper<out SvgNode, out Element>>()
     var styleSheet: StyleSheet? = null
         private set

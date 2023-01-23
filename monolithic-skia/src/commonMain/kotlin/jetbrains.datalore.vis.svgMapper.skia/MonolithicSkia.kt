@@ -2,12 +2,9 @@ package jetbrains.datalore.vis.svgMapper.skia
 
 import jetbrains.datalore.base.geometry.DoubleVector
 import jetbrains.datalore.plot.MonolithicCommon
-import jetbrains.datalore.plot.MonolithicCommon.PlotsBuildResult
 import jetbrains.datalore.plot.config.PlotConfig
 import jetbrains.datalore.plot.config.PlotConfigClientSide
 import jetbrains.datalore.plot.server.config.BackendSpecTransformUtil
-import org.jetbrains.skiko.*
-
 
 object MonolithicSkia {
     fun buildPlotFromRawSpecs(
@@ -43,11 +40,11 @@ object MonolithicSkia {
                 plotMaxWidth,
                 plotPreferredWidth = null
             )
-            if (buildResult is PlotsBuildResult.Error) {
+            if (buildResult is MonolithicCommon.PlotsBuildResult.Error) {
                 return Result.failure(Throwable(buildResult.error))
             }
 
-            val success = buildResult as PlotsBuildResult.Success
+            val success = buildResult as MonolithicCommon.PlotsBuildResult.Success
             val computationMessages = success.buildInfos.flatMap { it.computationMessages }
             computationMessagesHandler(computationMessages)
             return Result.success(success.buildInfos)

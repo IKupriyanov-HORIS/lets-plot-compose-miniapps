@@ -82,7 +82,8 @@ dependencies {
     skikoNativeX64("org.jetbrains.skiko:skiko-android-runtime-x64:$skiko_version")
     skikoNativeArm64("org.jetbrains.skiko:skiko-android-runtime-arm64:$skiko_version")
 
-    implementation(project(":vis-svg-mapper-skia")) // causes dups.
+    implementation(project(":vis-svg-mapper-skia"))
+    implementation(project(":monolithic-skia"))
     implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:base:$lets_plot_version") { isTransitive = false }
     implementation("org.jetbrains.lets-plot:mapper-core:$lets_plot_version") { isTransitive = false }

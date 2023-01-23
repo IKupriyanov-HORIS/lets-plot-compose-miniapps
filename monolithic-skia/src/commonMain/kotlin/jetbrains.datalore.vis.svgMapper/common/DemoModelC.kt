@@ -1,4 +1,4 @@
-package jetbrains.datalore.vis.svgMapper.demo
+package jetbrains.datalore.vis.svgMapper.common
 
 import jetbrains.datalore.base.geometry.DoubleRectangle
 import jetbrains.datalore.vis.svg.*

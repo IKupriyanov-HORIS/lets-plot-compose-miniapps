@@ -5,10 +5,10 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.mapper
 
+import jetbrains.datalore.base.encoding.Base64
 import jetbrains.datalore.mapper.core.Mapper
 import jetbrains.datalore.mapper.core.MapperFactory
 import jetbrains.datalore.vis.svg.*
-import jetbrains.datalore.vis.svgMapper.skia.mapper.Base64.encodeToBase64
 import jetbrains.datalore.vis.svgMapper.skia.mapper.drawing.*
 import org.jetbrains.skia.ColorAlphaType
 import org.jetbrains.skia.EncodedImageFormat
@@ -57,7 +57,7 @@ internal class SvgNodeMapperFactory(private val peer: SvgSkiaPeer) : MapperFacto
                 LOG.error(IllegalStateException("Image encoding failed")) { "Image encoding failed" }
                 return "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
             }
-            val encodedPng = png.bytes.encodeToBase64()
+            val encodedPng = Base64.encode(png.bytes)
             return "data:image/png;base64,$encodedPng"
         }
     }

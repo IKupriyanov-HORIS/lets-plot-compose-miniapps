@@ -14,7 +14,7 @@ internal typealias SkPath = org.jetbrains.skia.Path
 
 internal const val INIFITY_BOUNDS = false
 
-internal abstract class Element: Drawable() {
+abstract class Element: Drawable() {
     var parent: Parent? by visualProp(null)
     var styleClass: List<String>? by visualProp(null)
     var transform: Matrix33? by visualProp(null)

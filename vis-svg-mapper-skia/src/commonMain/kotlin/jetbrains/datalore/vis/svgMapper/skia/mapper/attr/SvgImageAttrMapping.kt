@@ -5,8 +5,8 @@
 
 package jetbrains.datalore.vis.svgMapper.skia.mapper.attr
 
+import jetbrains.datalore.base.encoding.Base64
 import jetbrains.datalore.vis.svg.SvgImageElement
-import jetbrains.datalore.vis.svgMapper.skia.mapper.Base64.decodeFromBase64
 import jetbrains.datalore.vis.svgMapper.skia.mapper.drawing.Image
 
 internal object SvgImageAttrMapping : SvgAttrMapping<Image>() {
@@ -24,7 +24,7 @@ internal object SvgImageAttrMapping : SvgAttrMapping<Image>() {
 
     fun setHrefDataUrl(target: Image, dataUrl: String): ByteArray {
         val imageData = dataUrl.split(",")[1]
-        val imageBytes = imageData.decodeFromBase64()
+        val imageBytes = Base64.decode(imageData)
         updateTargetImage(target, imageBytes)
         return imageBytes
     }

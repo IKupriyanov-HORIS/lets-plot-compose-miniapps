@@ -22,12 +22,13 @@ allprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
+
         localProps["maven.repo.local"]?.let {
             mavenLocal {
                 url = uri(it)
             }
         }
-        mavenLocal()
     }
 }
 

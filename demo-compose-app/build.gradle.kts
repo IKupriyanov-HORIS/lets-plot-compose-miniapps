@@ -14,6 +14,7 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(project(":vis-svg-mapper-skia"))
+                implementation(project(":monolithic-skia"))
 
                 implementation("org.jetbrains.lets-plot:base:$lets_plot_version") { isTransitive = false }
                 implementation("org.jetbrains.lets-plot:base-portable:$lets_plot_version") { isTransitive = false }
@@ -34,6 +35,7 @@ kotlin {
 
 compose.desktop.application {
     mainClass = "me.ikupriyanov.demo.plot.AreaViewerSkiaKt"
+    //mainClass = "me.ikupriyanov.demo.svg.InteractiveSvgDemoKt"
 
     nativeDistributions {
         targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import jetbrains.datalore.vis.svgMapper.demo.DemoModelA
-import jetbrains.datalore.vis.svgMapper.demo.DemoModelB
-import jetbrains.datalore.vis.svgMapper.demo.DemoModelC
+import jetbrains.datalore.vis.svgMapper.common.DemoModelA
+import jetbrains.datalore.vis.svgMapper.common.DemoModelB
+import jetbrains.datalore.vis.svgMapper.common.DemoModelC
 import me.ikupriyanov.demo.utils.svg
 
 fun main() = application {

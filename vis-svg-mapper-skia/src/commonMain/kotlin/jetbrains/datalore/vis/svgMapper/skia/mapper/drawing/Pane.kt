@@ -8,7 +8,7 @@ package jetbrains.datalore.vis.svgMapper.skia.mapper.drawing
 import org.jetbrains.skia.Canvas
 import org.jetbrains.skia.Rect
 
-internal class Pane: Parent() {
+class Pane: Parent() {
     var x: Float by visualProp(0.0f)
     var y: Float by visualProp(0.0f)
     var width: Float by visualProp(0.0f)

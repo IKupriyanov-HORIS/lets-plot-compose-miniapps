@@ -11,7 +11,7 @@ import jetbrains.datalore.base.observable.collections.list.ObservableList
 import jetbrains.datalore.base.observable.event.EventHandler
 import org.jetbrains.skia.Canvas
 
-internal abstract class Parent: Element() {
+abstract class Parent: Element() {
     protected val translateX: Float = transform?.translate?.x ?: 0f
     protected val translateY: Float = transform?.translate?.y ?: 0f
 
